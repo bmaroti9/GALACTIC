@@ -1,0 +1,42 @@
+import math
+import random
+import sys
+from helpers import *
+import pygame
+from pygame.locals import *
+import time
+
+
+class floating_resource(pygame.sprite.Sprite):
+    def __init__(self, color, amount, pos, reasource, speed):
+        super().__init__()
+
+        self.color = color
+        self.pos = [pos[0], pos[1]]
+        self.amount = amount
+        self.speed = [speed[0] + random.randint(-2, 2), speed[1] + random.randint(-2, 2)]
+        self.reasource = reasource
+        self.c = False
+
+    def update(self, player, surface):
+        self.pos[0] += (self.speed[0] * 0.7)
+        self.pos[1] += (self.speed[1] * 0.7)
+        
+        self.real_x = player.pos[0] - self.pos[0] + surface.get_width() / 2
+        self.real_y = player.pos[1] - self.pos[1] + surface.get_height() / 2
+
+        self.c = self.real_x > -100 and self.real_x < surface.get_width() + 100 and \
+            self.real_y > -100 and self.real_y < surface.get_height() + 100
+
+        if self.c:
+            pygame.draw.circle(surface, self.color, (int(self.real_x), int(self.real_y)), self.amount // 10)
+
+
+def check_reasources(pos, FR):
+    for n in FR:
+        if n.c:
+            x = distance(pos, [n.real_x, n.real_y])
+            if x < (n.amount / 10) + 50:
+                return n
+    
+    return 0

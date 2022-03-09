@@ -1,0 +1,79 @@
+[
+  {
+    "name": "mosquito",
+    "shrink": 0.13,
+    "guns": [
+      [
+        11,
+        30
+      ]
+    ],
+    "gun_timer": 20,
+    "engine_efficiancy": 0.06,
+    "type": "fighter",
+    "turning": 0.6
+  },
+  {
+    "name": "Lemming",
+    "shrink": 0.09,
+    "guns": [
+      [
+        21,
+        10
+      ],
+      [
+        -21,
+        10
+      ]
+    ],
+    "gun_timer": 20,
+    "engine_efficiancy": 0.13,
+    "type": "fighter",
+    "turning": 0.5
+  },
+  {
+    "name": "Crabb",
+    "shrink": 0.11,
+    "guns": [
+      [
+        19,
+        60
+      ],
+      [
+        -19,
+        60
+      ]
+    ],
+    "gun_timer": 10,
+    "engine_efficiancy": 0.075,
+    "type": "fighter",
+    "turning": 0.35
+  },
+  {
+    "name": "Milkyway",
+    "shrink": 0.27,
+    "guns": [],
+    "gun_timer": 10,
+    "engine_efficiancy": 0.03,
+    "type": "lander",
+    "turning": 0.6
+  },
+  {
+    "name": "Bat",
+    "shrink": 0.15,
+    "guns": [[-35, 34], [34, 34]],
+    "gun_timer": 10,
+    "engine_efficiancy": 0.03,
+    "type": "fighter",
+    "turning": 0.5
+  },
+  {
+    "name": "Worm",
+    "shrink": 0.5,
+    "guns": [[0, 110]],
+    "gun_timer": 10,
+    "engine_efficiancy": 0.03,
+    "type": "command",
+    "turning": 0.2
+  }
+]
