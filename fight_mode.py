@@ -98,4 +98,4 @@ def land_mode(surface, STARS, PLANETS, OPPONENTS, SUN, FR, PLAYER, PERSON, scrol
         
         PLAYER.update(surface, SUN, FR, PLANETS, PERSON)
 
-    PERSON.update(surface, PLAYER.landed, PLAYER, scroll, big_event)
+    PERSON.update(surface, PLAYER.landed, PLAYER, scroll, big_event, SUN, PLANETS)

@@ -8,6 +8,7 @@ import time
 
 from I_industries import *
 from I_people import *
+from map_mode import *
 
 pygame.init()
 
@@ -17,7 +18,7 @@ FONT3 = pygame.font.SysFont("latinmodernmonolight", 30)
 FONT4 = pygame.font.SysFont("ubuntu", 26)
 FONT5 = pygame.font.SysFont("latinmodernmonoslanted", 30)
 
-CITY_TAB_NAMES = ["Industies", "Usage", "People", "Reasources"]
+CITY_TAB_NAMES = ["Industies", "Usage", "People", "Trading Map"]
 
 
 class City_info(pygame.sprite.Sprite):
@@ -30,12 +31,12 @@ class City_info(pygame.sprite.Sprite):
             (surface.get_width() - 270, surface.get_height() - 200))
         self.talk_chat = []
         self.talk_word_y = 40
-        
+
         self.people_scroll = 0
         self.people_search = False
         self.talk_search = True
 
-    def update(self, PLANET, surface, person, city, scroll, big_event):
+    def update(self, PLANET, surface, person, city, scroll, big_event, player, SUN, PLANETS):
         person.city_surf.fill((0, 0, 0))
 
         if city.capital == 1:
@@ -65,6 +66,10 @@ class City_info(pygame.sprite.Sprite):
                     People(self, person.city_surf, city,
                            PLANET, scroll, big_event)
                     #talk(person.city_surf, self, city, PLANET, big_event)
+                elif n == "Trading Map":
+                    trading_routes(self.people_surf, FONT2,
+                                   player, SUN, 0, PLANETS)
+                    person.city_surf.blit(self.people_surf, (270, 200))
 
             else:
                 text_color = (150, 150, 150)
@@ -78,5 +83,7 @@ class City_info(pygame.sprite.Sprite):
                              (0, y + 46), (230, y + 46))
             y += 50
             index += 1
+
+            self.people_surf.fill((0, 0, 0))
 
         surface.blit(person.city_surf, (0, 0))

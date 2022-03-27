@@ -55,14 +55,14 @@ def People(Info, surface, city, PLANET, scroll, big_event):
 
     huhu = search_content(Info.people_word, city.people)
 
-    Info.people_scroll += (scroll - 1) * 250
+    Info.people_scroll += (scroll - 1) * 400
 
     x = 0 - (len(huhu) * 40) + 460
     x = min(x, Info.people_surf.get_height() - 460)
 
     print(Info.people_scroll, x)
 
-    if Info.people_scroll > 0:
+    if Info.people_scroll > -1:
         Info.people_scroll = 0
     elif Info.people_scroll < x:
         Info.people_scroll = x

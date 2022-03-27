@@ -20,7 +20,6 @@ def map_mode(surface, LABEL_FONT, PLAYER, OPPONENTS, ARROW, SUN, scroll, PLANETS
     elif keys[pygame.K_LEFT]:
         scroll = 0.92
 
-
     x = (SUN.real_x - surface.get_width() / 2) / \
         (900 / SCROLL) + (surface.get_width() / 2)
     y = (SUN.real_y - surface.get_height() / 2) / \
@@ -80,3 +79,35 @@ def labelled_dot(surface, pos, color, owner, LABEL_FONT, PLAYER, ARROW, text, si
     c = pygame.mouse.get_pressed(3)[0]
     if a[0] < mouse[0] and mouse[0] < b[0] and a[1] < mouse[1] and mouse[1] < b[1] and c:
         ARROW.chosen = owner
+
+
+def trading_routes(surface, LABEL_FONT, PLAYER, SUN, scroll, PLANETS):
+
+    global SCROLL
+    surface.fill((0, 0, 0))
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_RIGHT]:
+        scroll = 1.08
+    elif keys[pygame.K_LEFT]:
+        scroll = 0.92
+
+    x = (SUN.real_x - surface.get_width() / 2) / \
+        (900 / SCROLL) + (surface.get_width() / 2)
+    y = (SUN.real_y - surface.get_height() / 2) / \
+        (900 / SCROLL) + (surface.get_height() / 2)
+
+    labelled_dot(surface, [x, y], SUN.color, SUN, LABEL_FONT, PLAYER,
+                 PLAYER, SUN.name, SCROLL * (SUN.size / 833), SUN.color)
+
+    for n in PLANETS:
+        x = (n.real_x - surface.get_width() / 2) / \
+            (900 / SCROLL) + (surface.get_width() / 2)
+        y = (n.real_y - surface.get_height() / 2) / \
+            (900 / SCROLL) + (surface.get_height() / 2)
+
+        labelled_dot(surface, [x, y], n.color, n,
+                     LABEL_FONT, PLAYER, PLAYER, n.name, SCROLL * (n.size / 833), n.color)
+
+    if SCROLL * scroll < 150 and SCROLL * scroll > 4:
+        SCROLL = SCROLL * scroll

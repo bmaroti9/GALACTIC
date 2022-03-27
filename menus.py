@@ -67,7 +67,8 @@ def start_menu(surface, CLOCK, sound1):
     time.sleep(0.2)
     font = pygame.font.SysFont("latinmodernmonolight", 70)
     STARS = []
-    for _ in range(80):
+    x = round((surface.get_height() * surface.get_width()) // 3000)
+    for _ in range(x):
         STARS.append(Star(surface.get_width(), surface.get_height()))
 
     while True:
@@ -120,7 +121,8 @@ def game(surface, CLOCK, sound1, load):
     SCORE=0
     PLAYER=Player(surface)
     STARS=[]
-    for _ in range(80):
+    x = round((surface.get_height() * surface.get_width()) // 3000)
+    for _ in range(x):
         STARS.append(Star(surface.get_width(), surface.get_height()))
 
     OPPONENTS=pygame.sprite.Group()

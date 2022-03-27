@@ -38,7 +38,7 @@ class Person(pygame.sprite.Sprite):
         global CITY_INFO
         CITY_INFO = City_info(surface)
 
-    def update(self, surface, PLANET, PLAYER, scroll, big_event):
+    def update(self, surface, PLANET, PLAYER, scroll, big_event, SUN, PLANETS):
         direction = calculate_angle(PLANET.pos, self.pos)
 
         if self.timer > 0:
@@ -87,7 +87,7 @@ class Person(pygame.sprite.Sprite):
             else:
                 PLAYER.mode = 0.1
                 CITY_INFO.update(PLANET, surface, self,
-                                 self.info_view, scroll, big_event)
+                                 self.info_view, scroll, big_event, PLAYER, SUN, PLANETS)
 
 
 class City(pygame.sprite.Sprite):

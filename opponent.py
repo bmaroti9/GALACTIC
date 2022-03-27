@@ -167,8 +167,8 @@ class Opponent(pygame.sprite.Sprite):
     def new_target(self, player, opponents):
         everybody = self.get_list_of_in_range(player, opponents)
 
-        if random.randint(0, 120) == 1:
-            self.unaccurate = random.randint(-60, 60)
+        if random.randint(0, 100) == 1:
+            self.unaccurate = random.randint(-120, 120)
 
         if len(everybody) > 0:
             best = math.inf
