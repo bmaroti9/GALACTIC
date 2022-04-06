@@ -1,11 +1,11 @@
 [
   {
     "name": "mosquito",
-    "shrink": 0.13,
+    "shrink": 0.1,
     "guns": [
       [
-        11,
-        30
+        8,
+        26
       ]
     ],
     "gun_timer": 20,

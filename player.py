@@ -23,7 +23,7 @@ class Player(pygame.sprite.Sprite):
         self.sound.set_volume(0)
         self.sound2 = pygame.mixer.Sound("Sounds/shoot_special.wav")
         self.kaboom = pygame.mixer.Sound("Sounds/kaboom.wav")
-        self.spaceship = 1
+        self.spaceship = 0
         self.direction = 0
         self.turning = 0
         self.x_speed = 0
@@ -219,9 +219,9 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
 
         if keys[K_UP]:
-            self.thrust_level = min(self.thrust_level + 0.0015, 0.1)
-        if keys[K_DOWN]:
-            self.thrust_level = max(self.thrust_level - 0.0015, 0)
+            self.thrust_level = self.info["engine_efficiancy"]
+        else:
+            self.thrust_level = 0
 
         pygame.draw.line(surface, (200, 200, 0), (40, surface.get_height() - 50),
                          (40 + (self.thrust_level * 4000), surface.get_height() - 50), 15)
