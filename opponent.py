@@ -15,7 +15,7 @@ class Opponent(pygame.sprite.Sprite):
     def __init__(self, player):
         super().__init__()
 
-        self.spaceship = random.randint(0, 4)
+        self.spaceship = random.randint(0, 5)
         self.info = DATA[self.spaceship]
 
         self.sound2 = pygame.mixer.Sound("Sounds/shoot_special.wav")
@@ -139,8 +139,8 @@ class Opponent(pygame.sprite.Sprite):
                 # print("killed")
 
         elif self.thrust == 1:
-            self.x_speed += math.sin(self.angle / 180.0 * math.pi) * 0.05
-            self.y_speed += math.cos(self.angle / 180.0 * math.pi) * 0.05
+            self.x_speed += math.sin(self.angle / 180.0 * math.pi) * self.info["engine_efficiancy"]
+            self.y_speed += math.cos(self.angle / 180.0 * math.pi) * self.info["engine_efficiancy"]
             self.to_draw = self.flames[random.randint(0, 3)]
             huhu = 1300 / (distance(self.pos, player.pos) + 0.00000001)
         else:

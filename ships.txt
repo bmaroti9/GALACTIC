@@ -9,31 +9,31 @@
       ]
     ],
     "gun_timer": 20,
-    "engine_efficiancy": 0.06,
+    "engine_efficiancy": 0.04,
     "type": "fighter",
     "turning": 0.6
   },
   {
     "name": "Lemming",
-    "shrink": 0.09,
+    "shrink": 0.076,
     "guns": [
       [
-        21,
-        10
+        17,
+        9
       ],
       [
-        -21,
-        10
+        -17,
+        9
       ]
     ],
     "gun_timer": 20,
-    "engine_efficiancy": 0.13,
+    "engine_efficiancy": 0.07,
     "type": "fighter",
     "turning": 0.5
   },
   {
     "name": "Crabb",
-    "shrink": 0.11,
+    "shrink": 0.095,
     "guns": [
       [
         19,
@@ -45,34 +45,34 @@
       ]
     ],
     "gun_timer": 10,
-    "engine_efficiancy": 0.075,
+    "engine_efficiancy": 0.07,
     "type": "fighter",
     "turning": 0.35
   },
   {
     "name": "Milkyway",
-    "shrink": 0.27,
+    "shrink": 0.20,
     "guns": [],
     "gun_timer": 10,
-    "engine_efficiancy": 0.03,
+    "engine_efficiancy": 0.04,
     "type": "lander",
     "turning": 0.6
   },
   {
     "name": "Bat",
-    "shrink": 0.15,
+    "shrink": 0.125,
     "guns": [[-35, 34], [34, 34]],
     "gun_timer": 10,
-    "engine_efficiancy": 0.03,
+    "engine_efficiancy": 0.06,
     "type": "fighter",
     "turning": 0.5
   },
   {
     "name": "Worm",
-    "shrink": 0.5,
+    "shrink": 0.37,
     "guns": [[0, 110]],
     "gun_timer": 10,
-    "engine_efficiancy": 0.03,
+    "engine_efficiancy": 0.09,
     "type": "command",
     "turning": 0.2
   }
