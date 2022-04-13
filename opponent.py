@@ -59,7 +59,7 @@ class Opponent(pygame.sprite.Sprite):
             self.dead_costumes.append(a)
 
     def fighting(self, surface, player, opponents, arrow, FR):
-        if random.randint(0, 15) == 1:
+        if random.randint(0, 60) == 1:
             self.new_target(player, opponents)
 
         angle = (self.target - self.angle) % 360
@@ -72,6 +72,9 @@ class Opponent(pygame.sprite.Sprite):
 
         if angle > 340 or angle < 20:
             you_can_shoot = 1
+        
+        if random.randint(1, 2) != 2 and self.gun_timer == 0:
+            self.gun_timer = self.gun_timer = 50
 
         self.angle += self.turning
         self.turning = self.turning * 0.92

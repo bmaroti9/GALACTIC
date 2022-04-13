@@ -23,7 +23,7 @@ class Player(pygame.sprite.Sprite):
         self.sound.set_volume(0)
         self.sound2 = pygame.mixer.Sound("Sounds/shoot_special.wav")
         self.kaboom = pygame.mixer.Sound("Sounds/kaboom.wav")
-        self.spaceship = 3
+        self.spaceship = 0
         self.direction = 0
         self.turning = 0
         self.x_speed = 0
@@ -32,7 +32,7 @@ class Player(pygame.sprite.Sprite):
         self.gun_timer = 0
         self.dead = 0
         self.dead_costumes = []
-        self.pos = [0, 0]
+        self.pos = [-1000, -1000]
         self.score = 0
         self.resources = [40, 100, 40, 0]
         self.info = DATA[self.spaceship]
