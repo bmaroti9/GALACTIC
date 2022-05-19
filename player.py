@@ -23,7 +23,7 @@ class Player(pygame.sprite.Sprite):
         self.sound.set_volume(0)
         self.sound2 = pygame.mixer.Sound("Sounds/shoot_special.wav")
         self.kaboom = pygame.mixer.Sound("Sounds/kaboom.wav")
-        self.spaceship = 0
+        self.spaceship = random.randint(0, 5)
         self.direction = 0
         self.turning = 0
         self.x_speed = 0

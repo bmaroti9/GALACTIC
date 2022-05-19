@@ -20,7 +20,7 @@ from person import *
 pygame.init()
 SCORE_FONT = pygame.font.SysFont("Verdana", 16)
 MUSIC_FONT = pygame.font.SysFont("comicsansms", 13)
-LABEL_FONT = pygame.font.SysFont("texgyreheros", 13)
+LABEL_FONT = pygame.font.SysFont('simsun', 15)
 
 
 def game_over(surface, CLOCK, SUN, STARS, sound1):
@@ -35,14 +35,14 @@ def game_over(surface, CLOCK, SUN, STARS, sound1):
         for star in STARS:
             star.update(surface, [0, 0])
 
-        font = pygame.font.SysFont("latinmodernmonolight", 120)
+        font = pygame.font.SysFont('microsoftnewtailue', 120)
         wrighting = font.render(
             "GAME OVER!", True, ((250, 70, 0)))
         rect = wrighting.get_rect()
         rect.center = [surface.get_width() // 2,
                        surface.get_height() // 2 - 100]
 
-        font2 = pygame.font.SysFont("latinmodernmonolight", 60)
+        font2 = pygame.font.SysFont('microsoftnewtailue', 60)
 
         restart = button(surface, "RESTART", font2, (250, 150, 0),
                          (50, 150, 50), [surface.get_width() // 2,
@@ -65,7 +65,7 @@ def game_over(surface, CLOCK, SUN, STARS, sound1):
 
 def start_menu(surface, CLOCK, sound1):
     time.sleep(0.2)
-    font = pygame.font.SysFont("latinmodernmonolight", 70)
+    font = pygame.font.SysFont('microsoftnewtailue', 70)
     STARS = []
     x = round((surface.get_height() * surface.get_width()) // 3000)
     for _ in range(x):
@@ -94,9 +94,9 @@ def start_menu(surface, CLOCK, sound1):
                    (0, 0, 0), [surface.get_width() // 2,
                    surface.get_height() // 2 - 30, 1], -1, (254, 200, 50))
 
-        b=button(surface, "RESUME SAVED", font, (250, 150, 0),
+        b=button(surface, "RESUME SAVED", font, (100, 70, 0),
                    (250, 150, 0), [surface.get_width() // 2,
-                   surface.get_height() // 2 + 50, 1], -1, (254, 200, 50))
+                   surface.get_height() // 2 + 50, 1], -1, (100, 70, 0))
 
         c=button(surface, "QUIT", font, (250, 150, 0),
                    (250, 150, 0), [surface.get_width() // 2,
@@ -104,7 +104,7 @@ def start_menu(surface, CLOCK, sound1):
 
         if a:
             return game(surface, CLOCK, sound1, False)
-        if b:
+        if b and False:
             return game(surface, CLOCK, sound1, True)
         if c:
             pygame.quit()
@@ -159,7 +159,7 @@ def game(surface, CLOCK, sound1, load):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_0:
                     PLAYER.mode=-PLAYER.mode
-                elif event.key == pygame.K_s:
+                elif event.key == pygame.K_s and False:
                     save(PLAYER, OPPONENTS, PLANETS, SUN)
                 elif pygame.key.get_mods() == 2:
                     PLAYER.mode=-PLAYER.mode

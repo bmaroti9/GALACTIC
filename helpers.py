@@ -6,6 +6,9 @@ import pygame
 from pygame.locals import *
 import time
 import json
+import os
+
+print(os.listdir())
 
 with open("names_first.txt", "r") as f:
     a = json.load(f)

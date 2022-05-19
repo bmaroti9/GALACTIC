@@ -8,11 +8,11 @@ import time
 
 pygame.init()
 
-FONT1 = pygame.font.SysFont("latinmodernmonolight", 60)
+FONT1 = pygame.font.SysFont('microsoftnewtailue', 60)
 FONT2 = pygame.font.SysFont("dejavuserif", 17)
-FONT3 = pygame.font.SysFont("latinmodernmonolight", 30)
+FONT3 = pygame.font.SysFont('microsoftnewtailue', 30)
 FONT4 = pygame.font.SysFont("ubuntu", 26)
-FONT5 = pygame.font.SysFont("latinmodernmonoslanted", 30)
+FONT5 = pygame.font.SysFont('poorrichard', 30)
 
 
 def People(Info, surface, city, PLANET, scroll, big_event):

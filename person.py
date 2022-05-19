@@ -24,7 +24,7 @@ class Person(pygame.sprite.Sprite):
             image = pygame.image.load(
                 "images/tukiemberke" + str(n) + ".png").convert_alpha(surface)
             image = pygame.transform.rotozoom(
-                image, 0.0, 0.1)
+                image, 0.0, 0.06)
             self.images.append(image)
 
         self.timer = 0
@@ -47,7 +47,7 @@ class Person(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         flip = False
         
-        if pygame.key.get_mods() == 512 and self.timer < 1:
+        if pygame.key.get_mods() == 512 and self.timer < 1 and False:
             self.timer = 20
             if self.info_view == 0:
                 pos_to_planet = [PLANET.pos[0] - self.pos[0] +

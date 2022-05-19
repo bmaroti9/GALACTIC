@@ -1,11 +1,16 @@
 import math
 import random
 import sys
-from helpers import *
+import os
 import pygame
 from pygame.locals import *
 import time
 
+# needed by pyinstaller to find data files
+if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+    os.chdir(sys._MEIPASS)
+
+from helpers import *
 from menus import *
 from helpers import *
 
