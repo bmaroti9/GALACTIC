@@ -9,6 +9,7 @@ from shots import *
 from reasources import *
 from sun import *
 from person import *
+from network_helper import *
 
 with open("ships.txt", "r") as f:
     DATA = json.load(f)
@@ -60,6 +61,9 @@ class Player(pygame.sprite.Sprite):
             self.dead_costumes.append(a)
 
     def update(self, surface, sun, FR, planets, PERSON):
+        if every_ticks(5):
+            send_data(self)
+        
         if self.timer > 0:
             self.timer -= 1
 

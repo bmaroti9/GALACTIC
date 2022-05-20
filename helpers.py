@@ -237,3 +237,8 @@ def fake_transparent(color1, color2, percent):
     for n in range(3):
         a.append(max((min(color1[n], color2[n]) + (color1[n] - color2[n]) * min(percent, 1)), 0))
     return a
+
+def every_ticks(gap):
+    if pygame.time.get_ticks() % gap == 0:
+        return True
+    return False

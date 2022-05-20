@@ -25,9 +25,20 @@ def recive_data():
     a = receive()
     return a
 
-def list_of_all_players(data):
+def list_of_all_ships(data):
     a = []
     for n in data:
         if data[0] == 'ship':
-            a
+            ship = data[1]
+            P_code = ship[0]
+            pos = ship[1]
+            direction = ship[2]
+            image = ship[3]
+
+def send_data(player):
+    {
+        "P_code": personal_code(),
+        "pos": player
+    }
+
     
