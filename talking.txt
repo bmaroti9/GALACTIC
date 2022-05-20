@@ -1,8 +1,0 @@
-{
-    "Question": [
-
-    ],
-    "Other": [
-       ["Hi!", "Hello!"] 
-    ]
-}

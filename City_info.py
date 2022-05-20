@@ -6,8 +6,6 @@ import pygame
 from pygame.locals import *
 import time
 
-from I_industries import *
-from I_people import *
 from map_mode import *
 
 pygame.init()

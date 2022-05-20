@@ -126,8 +126,9 @@ def game(surface, CLOCK, sound1, load):
         STARS.append(Star(surface.get_width(), surface.get_height()))
 
     OPPONENTS=pygame.sprite.Group()
-    for _ in range(10):
-        OPPONENTS.add(Opponent(PLAYER))
+    #removed oponents
+    #for _ in range(10):
+        #OPPONENTS.add(Opponent(PLAYER))
 
     FR=pygame.sprite.Group()
 
@@ -157,10 +158,12 @@ def game(surface, CLOCK, sound1, load):
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_0:
+                if event.key == pygame.K_0 or event.key == pygame.K_v:
                     PLAYER.mode=-PLAYER.mode
                 elif event.key == pygame.K_s and False:
                     save(PLAYER, OPPONENTS, PLANETS, SUN)
+                elif event.key == pygame.K_ESCAPE:
+                    return start_menu(surface, CLOCK, sound1)
                 elif pygame.key.get_mods() == 2:
                     PLAYER.mode=-PLAYER.mode
             if event.type == pygame.MOUSEBUTTONDOWN:

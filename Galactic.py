@@ -5,6 +5,7 @@ import os
 import pygame
 from pygame.locals import *
 import time
+import json
 
 # needed by pyinstaller to find data files
 if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
@@ -13,6 +14,10 @@ if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
 from helpers import *
 from menus import *
 from helpers import *
+from network_helper import *
+
+with open("networking.txt", "w") as f:
+    json.dump(blank_networking(), f, indent=2)
 
 if 1 == 1:
     SCREEN_WIDTH = pygame.display.Info().current_w
