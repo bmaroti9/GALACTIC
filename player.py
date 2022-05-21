@@ -10,6 +10,7 @@ from reasources import *
 from sun import *
 from person import *
 from network_helper import *
+from spaceships import *
 
 with open("ships.txt", "r") as f:
     DATA = json.load(f)
@@ -59,11 +60,21 @@ class Player(pygame.sprite.Sprite):
             a = pygame.image.load(
                 "images/explosion" + str(n + 1) + ".png")
             self.dead_costumes.append(a)
+        
+        self.apperance = Spaceship(surface, self.spaceship)
 
     def update(self, surface, sun, FR, planets, PERSON):
         if every_ticks(5):
-            send_data(self)
+            #send_data(self)
+            pass
         
+        keys = pygame.key.get_pressed()
+
+        self.apperance.update(surface, keys[pygame.K_UP], keys[pygame.K_RIGHT], keys[pygame.K_LEFT], 
+                    pygame.K_SPACE)
+        self.rect = self.apperance.rect
+        
+        '''
         if self.timer > 0:
             self.timer -= 1
 
@@ -75,6 +86,7 @@ class Player(pygame.sprite.Sprite):
             if self.land_chaned_pos:
                 PERSON.pos = [self.pos[0], self.pos[1]]
                 self.land_chaned_pos = False
+        '''
 
     def fight(self, surface, sun, FR, planets, PERSON):
         keys = pygame.key.get_pressed()
@@ -236,6 +248,10 @@ class Player(pygame.sprite.Sprite):
         elif self.mode == 1:    
             return self.dead > 50
 
+def controll_spaceship():
+    keys = pygame.key.get_pressed()
+    inputs = [keys[pygame.K_UP], keys[pygame.K_RIGHT], keys[pygame.K_LEFT], pygame.K_SPACE]
+    
+    return inputs
 
-def nice_thrust(points):
-    x
+

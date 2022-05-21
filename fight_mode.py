@@ -8,8 +8,27 @@ import time
 
 from shots import *
 from opponent import *
+from player import *
 
-def fight_mode(surface, PLAYER, STARS, OPPONENTS, ARROW, THRUST, SUN, fonts, FR, PLANETS, PERSON):
+class Screen_focus(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+
+        self.pos = [0, 0]
+        self.x_speed = 0
+        self.y_speed = 0
+    
+    def update(self, focus_on):
+        self.pos = focus_on.pos
+        self.x_speed = focus_on.x_speed
+        self.y_speed = focus_on.y_speed
+
+SCREEN_FOCUS = Screen_focus()
+
+def get_screen_focus():
+    return SCREEN_FOCUS
+
+def fight_mode(surface, SPACESHIPS, STARS, ARROW, THRUST, SUN, fonts, FR, PLANETS, PERSON):
     surface.fill((30, 30, 45))
 
     for star in STARS:
@@ -27,18 +46,8 @@ def fight_mode(surface, PLAYER, STARS, OPPONENTS, ARROW, THRUST, SUN, fonts, FR,
     
     #print(len(OPPONENTS))
 
-    volumes = 0
-    for opponent in OPPONENTS:
-        x = opponent.fighting(surface, PLAYER, OPPONENTS, ARROW, FR)
-        if x > volumes:
-            volumes = x
-        if opponent.dead > 26:
-            OPPONENTS.add(Opponent(PLAYER))
-            print("added")
-    if volumes > 1:
-        THRUST.set_volume(1)
-    else:
-        THRUST.set_volume(volumes)
+    for spaceship in SPACESHIPS:
+        spaceship.update(surface, controll_spaceship())
 
     speed = "{:.2f}".format(
         math.sqrt((PLAYER.x_speed ** 2) + (PLAYER.y_speed ** 2)))
@@ -48,7 +57,7 @@ def fight_mode(surface, PLAYER, STARS, OPPONENTS, ARROW, THRUST, SUN, fonts, FR,
             retrogade(PLAYER.x_speed, PLAYER.y_speed) + 180, surface)
     ARROW.update(surface, PLAYER, fonts[0])
 
-    PLAYER.update(surface, SUN, FR, PLANETS, PERSON)
+    SCREEN_FOCUS.update(PLAYER.apperance)
 
     update_shots(surface)
 
@@ -99,3 +108,4 @@ def land_mode(surface, STARS, PLANETS, OPPONENTS, SUN, FR, PLAYER, PERSON, scrol
         PLAYER.update(surface, SUN, FR, PLANETS, PERSON)
 
     PERSON.update(surface, PLAYER.landed, PLAYER, scroll, big_event, SUN, PLANETS)
+
