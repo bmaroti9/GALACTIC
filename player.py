@@ -10,7 +10,6 @@ from reasources import *
 from sun import *
 from person import *
 from network_helper import *
-from spaceships import *
 
 with open("ships.txt", "r") as f:
     DATA = json.load(f)
@@ -250,7 +249,7 @@ class Player(pygame.sprite.Sprite):
 
 def controll_spaceship():
     keys = pygame.key.get_pressed()
-    inputs = [keys[pygame.K_UP], keys[pygame.K_RIGHT], keys[pygame.K_LEFT], pygame.K_SPACE]
+    inputs = [keys[pygame.K_UP], keys[pygame.K_RIGHT], keys[pygame.K_LEFT], keys[pygame.K_SPACE]]
     
     return inputs
 

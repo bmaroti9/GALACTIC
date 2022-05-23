@@ -6,6 +6,7 @@ import pygame
 from pygame.locals import *
 import time
 
+FR = pygame.sprite.Group()
 
 class floating_resource(pygame.sprite.Sprite):
     def __init__(self, color, amount, pos, reasource, speed):
@@ -18,12 +19,12 @@ class floating_resource(pygame.sprite.Sprite):
         self.reasource = reasource
         self.c = False
 
-    def update(self, player, surface):
+    def update(self, screen_focus, surface):
         self.pos[0] += (self.speed[0] * 0.7)
         self.pos[1] += (self.speed[1] * 0.7)
         
-        self.real_x = player.pos[0] - self.pos[0] + surface.get_width() / 2
-        self.real_y = player.pos[1] - self.pos[1] + surface.get_height() / 2
+        self.real_x = screen_focus.pos[0] - self.pos[0] + surface.get_width() / 2
+        self.real_y = screen_focus.pos[1] - self.pos[1] + surface.get_height() / 2
 
         self.c = self.real_x > -100 and self.real_x < surface.get_width() + 100 and \
             self.real_y > -100 and self.real_y < surface.get_height() + 100
@@ -31,6 +32,20 @@ class floating_resource(pygame.sprite.Sprite):
         if self.c:
             pygame.draw.circle(surface, self.color, (int(self.real_x), int(self.real_y)), self.amount // 10)
 
+def add_reasource(color, amount, pos, reasource, speed):
+    global FR
+    FR.add(floating_resource(color, amount, pos, reasource, speed))
+
+def update_reasources():
+    global FR
+    for reasource in FR:
+        reasource.update(SCREEN_FOCUS, surface)
+        if random.randint(0, 3000) == 1:
+            reasource.kill()
+
+def kill_all_reasources():
+    FR = 0
+    FR = pygame.sprite.Group()
 
 def check_reasources(pos, FR):
     for n in FR:

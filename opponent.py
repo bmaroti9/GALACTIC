@@ -208,3 +208,6 @@ class Opponent(pygame.sprite.Sprite):
                 a.append(n)
 
         return a
+
+def controll_bot():
+    None

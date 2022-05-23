@@ -16,6 +16,7 @@ from sun import *
 from fight_mode import *
 from reasources import *
 from person import *
+from spaceships import *
 
 pygame.init()
 SCORE_FONT = pygame.font.SysFont("Verdana", 16)
@@ -90,17 +91,17 @@ def start_menu(surface, CLOCK, sound1):
 
         surface.blit(logo, rect)
 
-        a=button(surface, "START NEW", font, (250, 150, 0),
+        a = button(surface, "START NEW", font, (250, 150, 0),
                    (0, 0, 0), [surface.get_width() // 2,
-                   surface.get_height() // 2 - 30, 1], -1, (254, 200, 50))
+                               surface.get_height() // 2 - 30, 1], -1, (254, 200, 50))
 
-        b=button(surface, "RESUME SAVED", font, (100, 70, 0),
+        b = button(surface, "RESUME SAVED", font, (100, 70, 0),
                    (250, 150, 0), [surface.get_width() // 2,
-                   surface.get_height() // 2 + 50, 1], -1, (100, 70, 0))
+                                   surface.get_height() // 2 + 50, 1], -1, (100, 70, 0))
 
-        c=button(surface, "QUIT", font, (250, 150, 0),
+        c = button(surface, "QUIT", font, (250, 150, 0),
                    (250, 150, 0), [surface.get_width() // 2,
-                   surface.get_height() // 2 + 130, 1], -1, (254, 200, 50))
+                                   surface.get_height() // 2 + 130, 1], -1, (254, 200, 50))
 
         if a:
             return game(surface, CLOCK, sound1, False)
@@ -116,27 +117,24 @@ def start_menu(surface, CLOCK, sound1):
 
 def game(surface, CLOCK, sound1, load):
     time.sleep(0.2)
-    PERSON=Person(surface)
-    SUN=Sun()
-    SCORE=0
-    PLAYER=Player(surface)
-    STARS=[]
+    PERSON = Person(surface)
+    SUN = Sun()
+    SCORE = 0
+    # PLAYER=Player(surface)
+    STARS = []
     x = round((surface.get_height() * surface.get_width()) // 3000)
     for _ in range(x):
         STARS.append(Star(surface.get_width(), surface.get_height()))
 
-    OPPONENTS=pygame.sprite.Group()
-    #removed oponents
+    SPACESHIPS = pygame.sprite.Group()
+    SPACESHIPS.add(Spaceship(surface, random.randint(0, 5)))
     #for _ in range(10):
-        #OPPONENTS.add(Opponent(PLAYER))
+        #SPACESHIPS.add(Spaceship(surface, random.randint(0, 5)))
 
-    FR=pygame.sprite.Group()
-
-    PLANETS=pygame.sprite.Group()
+    PLANETS = pygame.sprite.Group()
     for _ in range(8):
         PLANETS.add(Planet(SUN, PLANETS, surface))
 
-    ARROW=Arrow()
     kill_shots()
 
     if load:
@@ -145,50 +143,50 @@ def game(surface, CLOCK, sound1, load):
     for n in PLANETS:
         n.after_loading(surface, load)
 
-    THRUST=pygame.mixer.Sound("Sounds/engine-sound.wav")
+    THRUST = pygame.mixer.Sound("Sounds/engine-sound.wav")
     THRUST.play(-1)
     THRUST.set_volume(0)
     sound1.set_volume(0.1)
 
     while True:
-        scroll=1
-        big_event=pygame.event.get()
+        scroll = 1
+        big_event = pygame.event.get()
         for event in big_event:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_0 or event.key == pygame.K_v:
-                    PLAYER.mode=-PLAYER.mode
+                    PLAYER.mode = -PLAYER.mode
                 elif event.key == pygame.K_s and False:
                     save(PLAYER, OPPONENTS, PLANETS, SUN)
                 elif event.key == pygame.K_ESCAPE:
                     return start_menu(surface, CLOCK, sound1)
                 elif pygame.key.get_mods() == 2:
-                    PLAYER.mode=-PLAYER.mode
+                    reverse_view_mode()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 4:
-                    scroll=1.12
+                    scroll = 1.12
                 elif event.button == 5:
-                    scroll=0.88
+                    scroll = 0.88
 
         # print(pygame.key.get_mods())
+        screen_f = get_screen_focus()
 
-        if PLAYER.mode == 1:
-            fight_mode(surface, PLAYER, STARS, OPPONENTS, ARROW,
-                       THRUST, SUN, [SCORE_FONT, MUSIC_FONT], FR, PLANETS, PERSON)
-        elif PLAYER.mode == -1:
-            map_mode(surface, LABEL_FONT, PLAYER,
-                     OPPONENTS, ARROW, SUN, scroll, PLANETS)
+        if screen_f.mode == 1:
+            fight_mode(surface, SPACESHIPS, STARS,
+                       THRUST, SUN, [SCORE_FONT, MUSIC_FONT], PLANETS, PERSON)
+        elif screen_f.mode == -1:
+            map_mode(surface, LABEL_FONT, screen_f,
+                     SPACESHIPS, SUN, scroll, PLANETS)
         else:
             land_mode(surface, STARS, PLANETS,
-                      OPPONENTS, SUN, FR, PLAYER, PERSON, scroll, big_event)
-            
+                      OPPONENTS, SUN, FR, screen_f, PERSON, scroll, big_event)
 
-        if PLAYER.is_dead():
-            sound1.set_volume(0)
-            THRUST.stop()
-            return game_over(surface, CLOCK, SUN, STARS, sound1)
+        #if PLAYER.is_dead():
+            #sound1.set_volume(0)
+            #THRUST.stop()
+            #return game_over(surface, CLOCK, SUN, STARS, sound1)
 
         # print(len(OPPONENTS))
         pygame.display.update()

@@ -34,19 +34,15 @@ class Sun(pygame.sprite.Sprite):
         print(self.name)
         self.color = (250, 170, 0)
 
-    def update(self, surface, player, opponents):
-        self.real_x = player.pos[0] - self.pos[0] + surface.get_width() / 2
-        self.real_y = player.pos[1] - self.pos[1] + surface.get_height() / 2
+    def update(self, surface, screen_focus, opponents):
+        self.real_x = screen_focus.pos[0] - self.pos[0] + surface.get_width() / 2
+        self.real_y = screen_focus.pos[1] - self.pos[1] + surface.get_height() / 2
         c = self.real_x > -self.size and self.real_x < surface.get_width() + self.size and \
             self.real_y > -self.size and self.real_y < surface.get_height() + self.size
         if c:
             
             pygame.draw.circle(surface, self.color, [
                                int(self.real_x), int(self.real_y)], self.size)
-            if distance(self.pos, player.pos) < self.size + 15 and player.dead == 0:
-                player.dead = 1
-                player.x_speed = 0
-                player.y_speed = 0
 
             for n in opponents:
                 if distance(self.pos, n.pos) < self.size + 15 and n.dead == 0:
@@ -119,47 +115,47 @@ class Planet(pygame.sprite.Sprite):
         self.rect.center = [20, 20]
 
 
-    def update(self, surface, player, opponents, CENTER):
-        self.real_x = CENTER.pos[0] - self.pos[0] + surface.get_width() / 2
-        self.real_y = CENTER.pos[1] - self.pos[1] + surface.get_height() / 2
+    def update(self, surface, screen_focus, opponents):
+        self.real_x = screen_focus.pos[0] - self.pos[0] + surface.get_width() / 2
+        self.real_y = screen_focus.pos[1] - self.pos[1] + surface.get_height() / 2
         c = self.real_x > -self.size and self.real_x < surface.get_width() + self.size and \
             self.real_y > -self.size and self.real_y < surface.get_height() + self.size
         if c:
-            a = calculate_angle(self.pos, player.pos)
-            b = retrogade(player.x_speed, player.y_speed)
-            c = (a - player.direction) % 360
+            a = calculate_angle(self.pos, screen_focus.pos)
+            b = retrogade(screen_focus.x_speed, screen_focus.y_speed)
+            c = (a - screen_focus.direction) % 360
 
-            #print(a, b, player.direction, c)
+            #print(a, b, screen_focus.direction, c)
 
             self.rect.center = [self.real_x, self.real_y]
             surface.blit(self.image, self.rect)
 
-            if distance(self.pos, player.pos) < self.size and player.dead == 0:
-                if player.info["type"] == "lander":
-                    a = calculate_angle(self.pos, player.pos)
-                    b = retrogade(player.x_speed, player.y_speed)
-                    c = (a - player.direction) % 360
-                    l = math.sqrt((player.x_speed ** 2) +
-                                  (player.y_speed ** 2))
-
-                    if a + 90 > b and a - 90 < b:
-                        player.x_speed = 0
-                        player.y_speed = 0
-                        player.landed = self
-                    else:
-                        player.landed = False
-
-                    if (player.dead == 0 and c < 330 and c > 30) or l > 2:
-                        player.dead = 1
-
-                else:
-                    player.dead = 1
-                    player.landed = self
-                    player.x_speed = 0
-                    player.y_speed = 0
-
             for n in opponents:
                 if distance(self.pos, n.pos) < self.size + 15 and n.dead == 0:
+                    if n.info["type"] == "lander":
+                        a = calculate_angle(self.pos, n.pos)
+                        b = retrogade(n.x_speed, n.y_speed)
+                        c = (a - n.direction) % 360
+                        l = math.sqrt((n.x_speed ** 2) +
+                                  (n.y_speed ** 2))
+
+                        if a + 90 > b and a - 90 < b:
+                            n.x_speed = 0
+                            n.y_speed = 0
+                            #n.landed = self
+                        else:
+                            #n.landed = False
+                            pass
+
+                        if (n.dead == 0 and c < 330 and c > 30) or l > 2:
+                            n.dead = 1
+
+                    else:
+                        n.dead = 1
+                        #n.landed = self
+                        n.x_speed = 0
+                        n.y_speed = 0
+                    
                     n.dead = 1
                     n.x_speed = 0
                     n.y_speed = 0

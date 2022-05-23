@@ -68,7 +68,8 @@ class Spaceship(pygame.sprite.Sprite):
         if inputs[2]:
             self.turning += self.info["turning"]
 
-        if inputs[3]:
+        if inputs[3] and self.gun_timer == 0:
+            print('sooting')
             speeds = (screen_focus.x_speed - self.x_speed,
                       screen_focus.y_speed - self.y_speed)
 
@@ -115,11 +116,9 @@ class Spaceship(pygame.sprite.Sprite):
                 for n in range(4):
                     geptuke = random.randint(-150, 100)
                     if geptuke > 0:
-                        FR.add(floating_resource(
-                            colors[n], geptuke, self.pos, n, [self.x_speed, self.y_speed]))
+                        add_reasource(colors[n], geptuke, self.pos, n, [self.x_speed, self.y_speed])
 
-                if arrow.chosen == self:
-                    arrow.chosen = 0
+                killed_chosen_maybe(self)
                 self.kill()
     
         elif inputs[0]:

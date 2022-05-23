@@ -9,12 +9,14 @@ import time
 from shots import *
 from opponent import *
 from player import *
+from star import *
 
 class Screen_focus(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
 
         self.pos = [0, 0]
+        self.mode = 1
         self.x_speed = 0
         self.y_speed = 0
     
@@ -28,36 +30,38 @@ SCREEN_FOCUS = Screen_focus()
 def get_screen_focus():
     return SCREEN_FOCUS
 
-def fight_mode(surface, SPACESHIPS, STARS, ARROW, THRUST, SUN, fonts, FR, PLANETS, PERSON):
+def get_view_mode():
+    return SCREEN_FOCUS.mode
+
+def reverse_view_mode():
+    global SCREEN_FOCUS
+    SCREEN_FOCUS.mode = -SCREEN_FOCUS.mode
+
+def fight_mode(surface, SPACESHIPS, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
     surface.fill((30, 30, 45))
 
     for star in STARS:
-        star.update(surface, [PLAYER.x_speed, PLAYER.y_speed])
+        star.update(surface, [SCREEN_FOCUS.x_speed, SCREEN_FOCUS.y_speed])
     
-    SUN.update(surface, PLAYER, OPPONENTS)
+    SUN.update(surface, SCREEN_FOCUS, SPACESHIPS)
 
     for n in PLANETS:
-        n.update(surface, PLAYER, OPPONENTS, PLAYER)
-
-    for reasource in FR:
-        reasource.update(PLAYER, surface)
-        if random.randint(0, 3000) == 1:
-            reasource.kill()
+        n.update(surface, SCREEN_FOCUS, SPACESHIPS)
     
-    #print(len(OPPONENTS))
-
+    update_reasources()
+    
     for spaceship in SPACESHIPS:
         spaceship.update(surface, controll_spaceship())
 
     speed = "{:.2f}".format(
-        math.sqrt((PLAYER.x_speed ** 2) + (PLAYER.y_speed ** 2)))
+        math.sqrt((SCREEN_FOCUS.x_speed ** 2) + (SCREEN_FOCUS.y_speed ** 2)))
     
     if float(speed) > 0.5:
-        ARROW.backwards(
-            retrogade(PLAYER.x_speed, PLAYER.y_speed) + 180, surface)
-    ARROW.update(surface, PLAYER, fonts[0])
+        backwards_arrow(
+            retrogade(SCREEN_FOCUS.x_speed, SCREEN_FOCUS.y_speed) + 180, surface)
+    guide_arrow(surface, SCREEN_FOCUS, fonts[0])
 
-    SCREEN_FOCUS.update(PLAYER.apperance)
+    SCREEN_FOCUS.update(SPACESHIPS.sprites()[0])
 
     update_shots(surface)
 
@@ -68,7 +72,7 @@ def fight_mode(surface, SPACESHIPS, STARS, ARROW, THRUST, SUN, fonts, FR, PLANET
         "playing: CoffeeRadio - STAR KNIGHT", True, ((200, 200, 200)))
 
     hühü = fonts[0].render(
-        "Score:  " + str(PLAYER.score), True, ((200, 200, 200)))
+        "Score:  " + str("PLAYER.score"), True, ((200, 200, 200)))
 
     hihi_rect = hihi.get_rect()
     hihi_rect.center = (surface.get_width() / 2 - 50, surface.get_height() - 20)
@@ -79,13 +83,7 @@ def fight_mode(surface, SPACESHIPS, STARS, ARROW, THRUST, SUN, fonts, FR, PLANET
     surface.blit(song, song_rect)
     surface.blit(hühü, [20, 20])
 
-    x = test_shots(PLAYER)
-    if x and PLAYER.dead == 0:
-        if not x.appointed == PLAYER and pygame.sprite.collide_mask(x, PLAYER):
-            PLAYER.dead = 1
-            x.kill()
-
-    for n in OPPONENTS:
+    for n in SPACESHIPS:
         x = test_shots(n)
         if n.c and x and n.dead == 0 and pygame.sprite.collide_mask(x, n):
             if not x.appointed == n:

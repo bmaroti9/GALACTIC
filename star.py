@@ -4,7 +4,6 @@ import random
 
 from helpers import *
 
-
 class Star(pygame.sprite.Sprite):
     def __init__(self, screen_width, screen_height):
         super().__init__()
@@ -39,12 +38,12 @@ class Arrow(pygame.sprite.Sprite):
         super().__init__()
 
         self.red = pygame.image.load(
-            "images/red_arrow.png").convert_alpha()
+            "images/red_arrow.png")
         self.green = pygame.image.load(
-            "images/green_arrow.png").convert_alpha()
+            "images/green_arrow.png")
         self.chosen = 0
 
-    def update(self, surface, player, SCORE_FONT):
+    def update(self, surface, SCREEN_FOCUS, SCORE_FONT):
         if isinstance(self.chosen, pygame.sprite.Sprite):
             dis = distance((player.pos[0], player.pos[1]), self.chosen.pos)
             if dis > 440:
@@ -78,3 +77,19 @@ class Arrow(pygame.sprite.Sprite):
         self.rect = self.copy.get_rect()
         self.rect.center = (pos)
         surface.blit(self.copy, self.rect)
+
+ARROW = Arrow()
+
+def killed_chosen_maybe(you):
+    global ARROW
+    if ARROW.chosen == you:
+        ARROW.chosen = 0
+
+def backwards_arrow(direction, surface):
+    ARROW.backwards(direction, surface)
+
+def guide_arrow(surface, SCREEN_FOCUS, SCORE_FONT):
+    ARROW.update(surface, SCREEN_FOCUS, SCORE_FONT)
+
+def get_arrow():
+    return ARROW
