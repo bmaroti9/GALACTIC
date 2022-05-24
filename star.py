@@ -45,10 +45,10 @@ class Arrow(pygame.sprite.Sprite):
 
     def update(self, surface, SCREEN_FOCUS, SCORE_FONT):
         if isinstance(self.chosen, pygame.sprite.Sprite):
-            dis = distance((player.pos[0], player.pos[1]), self.chosen.pos)
+            dis = distance((SCREEN_FOCUS.pos[0], SCREEN_FOCUS.pos[1]), self.chosen.pos)
             if dis > 440:
                 angle = calculate_angle(
-                    [player.pos[0], player.pos[1]], self.chosen.pos)
+                    [SCREEN_FOCUS.pos[0], SCREEN_FOCUS.pos[1]], self.chosen.pos)
                 pos = rotating_position(
                     0, 150, angle, [surface.get_width() / 2, surface.get_height() / 2])
                 self.copy = pygame.transform.rotozoom(

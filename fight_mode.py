@@ -10,6 +10,7 @@ from shots import *
 from opponent import *
 from player import *
 from star import *
+from sun import *
 
 class Screen_focus(pygame.sprite.Sprite):
     def __init__(self):
@@ -49,8 +50,9 @@ def fight_mode(surface, SPACESHIPS, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
         n.update(surface, SCREEN_FOCUS, SPACESHIPS)
     
     update_reasources()
-    
+
     for spaceship in SPACESHIPS:
+        gravity(spaceship, SUN, PLANETS)
         spaceship.update(surface, controll_spaceship())
 
     speed = "{:.2f}".format(

@@ -115,51 +115,46 @@ class Planet(pygame.sprite.Sprite):
         self.rect.center = [20, 20]
 
 
-    def update(self, surface, screen_focus, opponents):
+    def update(self, surface, screen_focus, spaceships):
         self.real_x = screen_focus.pos[0] - self.pos[0] + surface.get_width() / 2
         self.real_y = screen_focus.pos[1] - self.pos[1] + surface.get_height() / 2
         c = self.real_x > -self.size and self.real_x < surface.get_width() + self.size and \
             self.real_y > -self.size and self.real_y < surface.get_height() + self.size
         if c:
-            a = calculate_angle(self.pos, screen_focus.pos)
-            b = retrogade(screen_focus.x_speed, screen_focus.y_speed)
-            c = (a - screen_focus.direction) % 360
-
-            #print(a, b, screen_focus.direction, c)
-
             self.rect.center = [self.real_x, self.real_y]
             surface.blit(self.image, self.rect)
+        
+        
+        for spaceship in spaceships:
+            a = calculate_angle(self.pos, spaceship.pos)
+            b = retrogade(spaceship.x_speed, spaceship.y_speed)
+            c = (a - spaceship.angle) % 360
 
-            for n in opponents:
-                if distance(self.pos, n.pos) < self.size + 15 and n.dead == 0:
-                    if n.info["type"] == "lander":
-                        a = calculate_angle(self.pos, n.pos)
-                        b = retrogade(n.x_speed, n.y_speed)
-                        c = (a - n.direction) % 360
-                        l = math.sqrt((n.x_speed ** 2) +
-                                  (n.y_speed ** 2))
+            if distance(self.pos, spaceship.pos) < self.size + 15 and spaceship.dead == 0:
+                if spaceship.info["type"] == "lander":
+                    a = calculate_angle(self.pos, spaceship.pos)
+                    b = retrogade(spaceship.x_speed, spaceship.y_speed)
+                    c = (a - spaceship.angle) % 360
+                    l = math.sqrt((spaceship.x_speed ** 2) +
+                                (spaceship.y_speed ** 2))
 
-                        if a + 90 > b and a - 90 < b:
-                            n.x_speed = 0
-                            n.y_speed = 0
-                            #n.landed = self
-                        else:
-                            #n.landed = False
-                            pass
-
-                        if (n.dead == 0 and c < 330 and c > 30) or l > 2:
-                            n.dead = 1
-
-                    else:
-                        n.dead = 1
+                    if a + 90 > b and a - 90 < b:
+                        spaceship.x_speed = 0
+                        spaceship.y_speed = 0
                         #n.landed = self
-                        n.x_speed = 0
-                        n.y_speed = 0
-                    
-                    n.dead = 1
-                    n.x_speed = 0
-                    n.y_speed = 0
+                    else:
+                        #n.landed = False
+                        pass
 
+                    if (spaceship.dead == 0 and c < 330 and c > 30) or l > 2:
+                        spaceship.dead = 1
+
+                else:
+                    spaceship.dead = 1
+                    #n.landed = self
+                    spaceship.x_speed = 0
+                    spaceship.y_speed = 0
+        
 
 def gravity(you, sun, planets):
     dis = distance(you.pos, (sun.pos)) + 0.0001
