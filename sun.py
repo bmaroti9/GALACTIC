@@ -130,7 +130,7 @@ class Planet(pygame.sprite.Sprite):
             b = retrogade(spaceship.x_speed, spaceship.y_speed)
             c = (a - spaceship.angle) % 360
 
-            if distance(self.pos, spaceship.pos) < self.size + 15 and spaceship.dead == 0:
+            if distance(self.pos, spaceship.pos) < self.size - 5 and spaceship.dead == 0:
                 if spaceship.info["type"] == "lander":
                     a = calculate_angle(self.pos, spaceship.pos)
                     b = retrogade(spaceship.x_speed, spaceship.y_speed)
@@ -168,7 +168,8 @@ def gravity(you, sun, planets):
         x += ((n.pos[0] - you.pos[0]) / (dis ** 2.5)) * weight * 0.0008
         y += ((n.pos[1] - you.pos[1]) / (dis ** 2.5)) * weight * 0.0008
 
-    return [x, y]
+    you.x_speed += x
+    you.y_speed += y
 
 def calculate_trading_routes(PLANET, PLANETS):
     #finds average

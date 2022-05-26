@@ -17,12 +17,13 @@ from fight_mode import *
 from reasources import *
 from person import *
 from spaceships import *
+from Joystick import *
 
-pygame.init()
+# pygame.init()
 SCORE_FONT = pygame.font.SysFont("Verdana", 16)
 MUSIC_FONT = pygame.font.SysFont("comicsansms", 13)
 LABEL_FONT = pygame.font.SysFont('simsun', 15)
-
+JOYSTICK = Joystick()
 
 def game_over(surface, CLOCK, SUN, STARS, sound1):
     time.sleep(0.2)
@@ -148,6 +149,8 @@ def game(surface, CLOCK, sound1, load):
     THRUST.set_volume(0)
     sound1.set_volume(0.1)
 
+    buttons = JOYSTICK.get_button()
+
     while True:
         scroll = 1
         big_event = pygame.event.get()
@@ -162,7 +165,7 @@ def game(surface, CLOCK, sound1, load):
                     save(PLAYER, OPPONENTS, PLANETS, SUN)
                 elif event.key == pygame.K_ESCAPE:
                     return start_menu(surface, CLOCK, sound1)
-                elif pygame.key.get_mods() == 2:
+                elif pygame.key.get_mods() == 2 or buttons[2]:
                     reverse_view_mode()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 4:

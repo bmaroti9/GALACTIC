@@ -9,8 +9,6 @@ import json
 
 from City_info import *
 
-pygame.init()
-
 with open("ships.txt", "r") as f:
     TALKING = json.load(f)
 
@@ -46,7 +44,7 @@ class Person(pygame.sprite.Sprite):
 
         keys = pygame.key.get_pressed()
         flip = False
-        
+
         if pygame.key.get_mods() == 512 and self.timer < 1 and False:
             self.timer = 20
             if self.info_view == 0:

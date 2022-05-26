@@ -64,12 +64,12 @@ class Spaceship(pygame.sprite.Sprite):
             self.real_y > -100 and self.real_y < surface.get_height() + 100
 
         if inputs[1]:
-            self.turning -= self.info["turning"]
+            self.turning -= self.info["turning"] * 1.4
         if inputs[2]:
-            self.turning += self.info["turning"]
+            self.turning += self.info["turning"] * 1.4
 
         if inputs[3] and self.gun_timer == 0:
-            print('sooting')
+            print('shooting')
             speeds = (screen_focus.x_speed - self.x_speed,
                       screen_focus.y_speed - self.y_speed)
 

@@ -7,6 +7,9 @@ from pygame.locals import *
 import time
 import json
 
+print("init")
+pygame.init()
+
 # needed by pyinstaller to find data files
 if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
     os.chdir(sys._MEIPASS)
@@ -26,9 +29,6 @@ else:
     SCREEN_WIDTH = 1000
     SCREEN_HEIGHT = 660
 
-print("init")
-pygame.init()
-
 SCORE_FONT = pygame.font.SysFont("Verdana", 16)
 LOAD_FONT = pygame.font.SysFont("nanumsquareround", 40)
 OPTIONS_FONT = pygame.font.SysFont("comicsansms", 35)
@@ -36,6 +36,8 @@ LABEL_FONT = pygame.font.SysFont("nanumsquareround", 13)
 MUSIC_FONT = pygame.font.SysFont("comicsansms", 13)
 CLOCK = pygame.time.Clock()
 SURFACE = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+#import Joystick
+#Joystick.test2(CLOCK)
 
 pygame.display.set_caption("GALACTIC ©2021-2022 Dragon tail")
 
@@ -71,3 +73,5 @@ print(pygame.font.get_fonts())
 
 
 start_menu(SURFACE, CLOCK, sound1)
+
+# pygame.joystick.quit()
