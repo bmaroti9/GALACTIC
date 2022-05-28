@@ -18,6 +18,7 @@ from reasources import *
 from person import *
 from spaceships import *
 from Joystick import *
+from network_helper import *
 
 # pygame.init()
 SCORE_FONT = pygame.font.SysFont("Verdana", 16)
@@ -126,7 +127,7 @@ def game(surface, CLOCK, sound1, load):
     for _ in range(x):
         STARS.append(Star(surface.get_width(), surface.get_height()))
 
-    add_to_my_spaceships(Spaceship(random.randint(0, 5), random_name(), [3800, 3800]))
+    add_to_my_spaceships(Spaceship(random.randint(0, 5), personal_name(), [3800, 3800]))
     #for _ in range(10):
         #SPACESHIPS.add(Spaceship(surface, random.randint(0, 5)))
 

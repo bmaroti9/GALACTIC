@@ -19,8 +19,8 @@ from menus import *
 from helpers import *
 from network_helper import *
 
-with open("networking.txt", "w") as f:
-    json.dump(blank_networking(), f, indent=2)
+#with open("networking.txt", "w") as f:
+    #json.dump(blank_networking(), f, indent=2)
 
 if 1 == 1:
     SCREEN_WIDTH = pygame.display.Info().current_w

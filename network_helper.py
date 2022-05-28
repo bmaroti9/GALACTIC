@@ -10,7 +10,7 @@ import json
 from localnet import *
 from helpers import *
 
-with open("ships.txt", "r") as f:
+with open("networking.txt", "r") as f:
     NETWORK = json.load(f)
 
 def blank_networking():
@@ -51,8 +51,8 @@ def send_my_data(my_spaceships):
 def detailed_data(spaceship):
     a = {
         "owners_name": spaceship.owners_name,
-        "pos": spaceship.pos,
-        "angle": spaceship.angle,
+        "pos": [round(spaceship.pos[0]), round(spaceship.pos[1])],
+        "angle": round(spaceship.angle),
         "spaceship": spaceship.spaceship
     }
     return a
@@ -70,13 +70,21 @@ OTHER_SPACESHIPS = pygame.sprite.Group()
 
 def update_other_spaceships():
     hihi = recive_data()
-    print(hihi)
+    #print(hihi)
     if hihi[0] == 0:
         passby_update(hihi[1])
     else:
         spaceship_check(hihi[1])
 
-def send_my_spaceships():
+def update_my_spaceships():
+    for n in MY_SPACESHIPS:
+        if n.owners_name == personal_name():
+            keys = pygame.key.get_pressed()
+            inputs = [keys[pygame.K_UP], keys[pygame.K_RIGHT], keys[pygame.K_LEFT], keys[pygame.K_SPACE]]
+            n.feed_input(inputs)
+        else:
+            hihi = ez_nem_fog_mukodni
+    
     send_my_data(MY_SPACESHIPS)
 
 def spaceship_check(detailed_data):
@@ -96,6 +104,7 @@ def spaceship_check(detailed_data):
             already_existing.correct_drift = [drift_x / 15, drift_y / 15]
             already_existing.correct_rotating_drift = drift_angle / 15
         elif not all_names.__contains__(name_of_new):
+            print("THIS SHOULD NOT HAVE HAPPENED!")
             new_spacehip = spaceship(n["spaceship"], n["owners_name"], n["pos"])
             OTHER_SPACESHIPS.add(new_spacehip)
 

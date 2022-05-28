@@ -33,7 +33,7 @@ def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
         spaceship.update(surface)
     
     update_other_spaceships()
-    send_my_spaceships()
+    update_my_spaceships()
 
     speed = "{:.2f}".format(
         math.sqrt((SCREEN_FOCUS.x_speed ** 2) + (SCREEN_FOCUS.y_speed ** 2)))
