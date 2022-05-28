@@ -68,11 +68,12 @@ def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
     for n in SPACESHIPS:
         x = test_shots(n)
         if n.c and x and n.dead == 0 and pygame.sprite.collide_mask(x, n):
-            if not x.appointed == n:
+            if not x.appointed == n.owners_name:
                 n.dead = 1
                 x.kill()
-            if x.appointed == PLAYER:
-                PLAYER.score += 1
+            if x.appointed == personal_name():
+                #PLAYER.score += 1
+                pass
 
 def land_mode(surface, STARS, PLANETS, OPPONENTS, SUN, FR, PLAYER, PERSON, scroll, big_event):  
     

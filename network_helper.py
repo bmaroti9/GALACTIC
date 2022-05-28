@@ -9,6 +9,7 @@ import json
 
 from localnet import *
 from helpers import *
+from spaceships import *
 
 with open("networking.txt", "r") as f:
     NETWORK = json.load(f)
@@ -105,8 +106,10 @@ def spaceship_check(detailed_data):
             already_existing.correct_rotating_drift = drift_angle / 15
         elif not all_names.__contains__(name_of_new):
             print("THIS SHOULD NOT HAVE HAPPENED!")
-            new_spacehip = spaceship(n["spaceship"], n["owners_name"], n["pos"])
+            new_spacehip = Spaceship(n["spaceship"], n["owners_name"], n["pos"])
             OTHER_SPACESHIPS.add(new_spacehip)
+
+        
 
 def passby_update(passby_data):
     global MY_SPACESHIPS

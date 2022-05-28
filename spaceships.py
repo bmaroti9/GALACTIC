@@ -9,7 +9,6 @@ from shots import *
 from reasources import *
 from sun import *
 from person import *
-from fight_mode import *
 
 with open("ships.txt", "r") as f:
     DATA = json.load(f)
@@ -79,7 +78,7 @@ class Spaceship(pygame.sprite.Sprite):
             for n in self.info["guns"]:
                 hihi = rotating_position(n[0], n[1], self.angle,
                                          (self.real_x, self.real_y))
-                add_shot(Shot(hihi, -self.angle, self,
+                add_shot(Shot(hihi, -self.angle, self.owners_name,
                               speeds))
                 self.gun_timer = self.info['gun_timer']
             
