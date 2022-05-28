@@ -15,7 +15,7 @@ from sun import *
 
 def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
     SPACESHIPS = get_spaceships()
-    print("these are fight mode's spaceships", SPACESHIPS)
+    print("L", SPACESHIPS)
     surface.fill((30, 30, 45))
 
     for star in STARS:

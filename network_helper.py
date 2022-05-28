@@ -70,7 +70,7 @@ OTHER_SPACESHIPS = pygame.sprite.Group()
 
 def update_other_spaceships():
     hihi = recive_data()
-    #print(hihi)
+    print("R", hihi)
     if hihi[0] == 0:
         passby_update(hihi[1])
     else:
