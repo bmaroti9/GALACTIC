@@ -8,37 +8,14 @@ import time
 
 from shots import *
 from opponent import *
+from network_helper import *
 from player import *
 from star import *
 from sun import *
 
-class Screen_focus(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-
-        self.pos = [0, 0]
-        self.mode = 1
-        self.x_speed = 0
-        self.y_speed = 0
-    
-    def update(self, focus_on):
-        self.pos = focus_on.pos
-        self.x_speed = focus_on.x_speed
-        self.y_speed = focus_on.y_speed
-
-SCREEN_FOCUS = Screen_focus()
-
-def get_screen_focus():
-    return SCREEN_FOCUS
-
-def get_view_mode():
-    return SCREEN_FOCUS.mode
-
-def reverse_view_mode():
-    global SCREEN_FOCUS
-    SCREEN_FOCUS.mode = -SCREEN_FOCUS.mode
-
-def fight_mode(surface, SPACESHIPS, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
+def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
+    SPACESHIPS = get_spaceships()
+    print("these are fight mode's spaceships", SPACESHIPS)
     surface.fill((30, 30, 45))
 
     for star in STARS:
@@ -49,11 +26,14 @@ def fight_mode(surface, SPACESHIPS, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
     for n in PLANETS:
         n.update(surface, SCREEN_FOCUS, SPACESHIPS)
     
-    update_reasources()
+    update_reasources(surface)
 
     for spaceship in SPACESHIPS:
         gravity(spaceship, SUN, PLANETS)
-        spaceship.update(surface, controll_spaceship())
+        spaceship.update(surface)
+    
+    update_other_spaceships()
+    send_my_spaceships()
 
     speed = "{:.2f}".format(
         math.sqrt((SCREEN_FOCUS.x_speed ** 2) + (SCREEN_FOCUS.y_speed ** 2)))
@@ -63,7 +43,7 @@ def fight_mode(surface, SPACESHIPS, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
             retrogade(SCREEN_FOCUS.x_speed, SCREEN_FOCUS.y_speed) + 180, surface)
     guide_arrow(surface, SCREEN_FOCUS, fonts[0])
 
-    SCREEN_FOCUS.update(SPACESHIPS.sprites()[0])
+    SCREEN_FOCUS.update(SPACESHIPS)
 
     update_shots(surface)
 
@@ -108,4 +88,3 @@ def land_mode(surface, STARS, PLANETS, OPPONENTS, SUN, FR, PLAYER, PERSON, scrol
         PLAYER.update(surface, SUN, FR, PLANETS, PERSON)
 
     PERSON.update(surface, PLAYER.landed, PLAYER, scroll, big_event, SUN, PLANETS)
-

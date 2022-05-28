@@ -36,10 +36,10 @@ def add_reasource(color, amount, pos, reasource, speed):
     global FR
     FR.add(floating_resource(color, amount, pos, reasource, speed))
 
-def update_reasources():
+def update_reasources(surface):
     global FR
     for reasource in FR:
-        reasource.update(SCREEN_FOCUS, surface)
+        reasource.update(get_screen_focus(), surface)
         if random.randint(0, 3000) == 1:
             reasource.kill()
 

@@ -23,7 +23,7 @@ from Joystick import *
 SCORE_FONT = pygame.font.SysFont("Verdana", 16)
 MUSIC_FONT = pygame.font.SysFont("comicsansms", 13)
 LABEL_FONT = pygame.font.SysFont('simsun', 15)
-JOYSTICK = Joystick()
+#JOYSTICK = Joystick()
 
 def game_over(surface, CLOCK, SUN, STARS, sound1):
     time.sleep(0.2)
@@ -121,14 +121,12 @@ def game(surface, CLOCK, sound1, load):
     PERSON = Person(surface)
     SUN = Sun()
     SCORE = 0
-    # PLAYER=Player(surface)
     STARS = []
     x = round((surface.get_height() * surface.get_width()) // 3000)
     for _ in range(x):
         STARS.append(Star(surface.get_width(), surface.get_height()))
 
-    SPACESHIPS = pygame.sprite.Group()
-    SPACESHIPS.add(Spaceship(surface, random.randint(0, 5)))
+    add_to_my_spaceships(Spaceship(random.randint(0, 5), random_name(), [3800, 3800]))
     #for _ in range(10):
         #SPACESHIPS.add(Spaceship(surface, random.randint(0, 5)))
 
@@ -149,7 +147,9 @@ def game(surface, CLOCK, sound1, load):
     THRUST.set_volume(0)
     sound1.set_volume(0.1)
 
-    buttons = JOYSTICK.get_button()
+
+    screen_f = get_screen_focus()
+    #buttons = JOYSTICK.get_button()
 
     while True:
         scroll = 1
@@ -160,12 +160,12 @@ def game(surface, CLOCK, sound1, load):
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_0 or event.key == pygame.K_v:
-                    PLAYER.mode = -PLAYER.mode
+                    screen_f.mode = -screen_f.mode
                 elif event.key == pygame.K_s and False:
-                    save(PLAYER, OPPONENTS, PLANETS, SUN)
+                    save(screen_f, OPPONENTS, PLANETS, SUN)
                 elif event.key == pygame.K_ESCAPE:
                     return start_menu(surface, CLOCK, sound1)
-                elif pygame.key.get_mods() == 2 or buttons[2]:
+                elif pygame.key.get_mods() == 2:
                     reverse_view_mode()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 4:
@@ -174,14 +174,12 @@ def game(surface, CLOCK, sound1, load):
                     scroll = 0.88
 
         # print(pygame.key.get_mods())
-        screen_f = get_screen_focus()
 
         if screen_f.mode == 1:
-            fight_mode(surface, SPACESHIPS, STARS,
+            fight_mode(surface, STARS,
                        THRUST, SUN, [SCORE_FONT, MUSIC_FONT], PLANETS, PERSON)
         elif screen_f.mode == -1:
-            map_mode(surface, LABEL_FONT, screen_f,
-                     SPACESHIPS, SUN, scroll, PLANETS)
+            map_mode(surface, LABEL_FONT, screen_f, SUN, scroll, PLANETS)
         else:
             land_mode(surface, STARS, PLANETS,
                       OPPONENTS, SUN, FR, screen_f, PERSON, scroll, big_event)

@@ -18,6 +18,38 @@ with open("names_first.txt", "r") as f:
 with open("names_last.txt", "r") as f:
     LAST_NAMES = json.load(f)
 
+class Screen_focus(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+
+        self.pos = [0, 0]
+        self.mode = 1
+        self.x_speed = 0
+        self.y_speed = 0
+        self.name_of_focus = 0
+    
+    def update(self, SPACESHIPS):
+        try:
+            focus_on = SPACESHIPS[0]
+            self.pos = focus_on.pos
+            self.x_speed = focus_on.x_speed
+            self.y_speed = focus_on.y_speed
+        except:
+            self.x_speed = 0
+            self.y_speed = 0
+        
+
+SCREEN_FOCUS = Screen_focus()
+
+def get_screen_focus():
+    return SCREEN_FOCUS
+
+def get_view_mode():
+    return SCREEN_FOCUS.mode
+
+def reverse_view_mode():
+    global SCREEN_FOCUS
+    SCREEN_FOCUS.mode = -SCREEN_FOCUS.mode
 
 def rotating_position(x, y, direction, pos):
     a = pos[0] + (x * math.cos(-direction / 180.0 *

@@ -7,12 +7,15 @@ from pygame.locals import *
 import time
 
 from star import *
+from network_helper import *
 
 SCROLL = 30
 
 
-def map_mode(surface, LABEL_FONT, SCREEN_FOCUS, SPACESHIPS, SUN, scroll, PLANETS):
+def map_mode(surface, LABEL_FONT, SCREEN_FOCUS, SUN, scroll, PLANETS):
     global SCROLL
+
+    SPACESHIPS = get_spaceships()
     surface.fill((0, 0, 0))
 
     keys = pygame.key.get_pressed()
@@ -58,7 +61,7 @@ def map_mode(surface, LABEL_FONT, SCREEN_FOCUS, SPACESHIPS, SUN, scroll, PLANETS
             if n == get_arrow().chosen:
                 z = (250, 0, 0)
             labelled_dot(surface, (x, y), z, n, LABEL_FONT,
-                         n.info["name"], 3, (200, 200, 200))
+                         n.owners_name, 3, (200, 200, 200))
 
 
 def labelled_dot(surface, pos, color, owner, LABEL_FONT, text, size, text_color):

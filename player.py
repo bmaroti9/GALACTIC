@@ -249,16 +249,16 @@ class Player(pygame.sprite.Sprite):
         elif self.mode == 1:    
             return self.dead > 50
 
-JOYSTICK = Joystick()
+#JOYSTICK = Joystick()
 def controll_spaceship():
-    axes = JOYSTICK.get_axes()
-    buttons = JOYSTICK.get_button()
+    #axes = JOYSTICK.get_axes()
+    #buttons = JOYSTICK.get_button()
     #print(buttons)
     
     keys = pygame.key.get_pressed()
-    #inputs = [keys[pygame.K_UP], keys[pygame.K_RIGHT], keys[pygame.K_LEFT], keys[pygame.K_SPACE]]
+    inputs = [keys[pygame.K_UP], keys[pygame.K_RIGHT], keys[pygame.K_LEFT], keys[pygame.K_SPACE]]
 
-    inputs = [round(axes[1]) == -1, round(axes[0]) == 1, round(axes[0]) == -1, buttons[1]]
+    #inputs = [round(axes[1]) == -1, round(axes[0]) == 1, round(axes[0]) == -1, buttons[1]]
 
     return inputs
 

@@ -8,7 +8,7 @@ import time
 
 from map_mode import *
 
-# pygame.init()
+pygame.init()
 
 FONT1 = pygame.font.SysFont('microsoftnewtailue', 60)
 FONT2 = pygame.font.SysFont("dejavuserif", 17)
