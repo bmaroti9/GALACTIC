@@ -9,6 +9,7 @@ from shots import *
 from reasources import *
 from sun import *
 from person import *
+from star import *
 
 with open("ships.txt", "r") as f:
     DATA = json.load(f)

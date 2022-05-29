@@ -41,15 +41,11 @@ def send_my_data(my_spaceships):
     else:
         for n in my_spaceships:
             a.append(passby_data(n))
-    
+    print("S", a)
     send(a)
         
-def is_it_passby(a):
-    try:
-        a["spaceship"]
-    except:
-        return True
-    return False
+def is_it_detailed(a):
+    return "spaceship" in a
 
 def detailed_data(spaceship):
     a = {
@@ -76,10 +72,14 @@ def update_other_spaceships():
     hihi = recive_data()
     print("R", hihi)
     for n in hihi:
-        if is_it_passby(n):
-            passby_update(n)
-        else:
-            spaceship_check(n)
+        print("list_of_recived_from_only_one_other", n)
+        for x in n:
+            print("P", x)
+            if is_it_detailed(x):
+                passby_update(x)
+            else:
+                print("SHOULD HAVE ADDED 1111111111111111111111111111111111111111111111")
+                spaceship_check(x)
 
 def update_my_spaceships():
     for n in MY_SPACESHIPS:
@@ -112,7 +112,7 @@ def spaceship_check(detailed_data):
             already_existing.x_speed = n["speed"][0]
             already_existing.x_speed = n["speed"][1]
         elif not all_names.__contains__(name_of_new):
-            print("THIS SHOULD NOT HAVE HAPPENED!")
+            print("THIS SHOULD NOT HAVE HAPPENED!", n)
             new_spacehip = Spaceship(n["spaceship"], n["owners_name"], n["pos"])
             OTHER_SPACESHIPS.add(new_spacehip)
 
