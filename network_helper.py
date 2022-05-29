@@ -76,10 +76,10 @@ def update_other_spaceships():
     hihi = recive_data()
     print("R", hihi)
     for n in hihi:
-        if is_it_passby(hihi):
-            passby_update(hihi)
+        if is_it_passby(n):
+            passby_update(n)
         else:
-            spaceship_check(hihi)
+            spaceship_check(n)
 
 def update_my_spaceships():
     for n in MY_SPACESHIPS:
