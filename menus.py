@@ -184,6 +184,10 @@ def game(surface, CLOCK, sound1, load):
         else:
             land_mode(surface, STARS, PLANETS,
                       OPPONENTS, SUN, FR, screen_f, PERSON, scroll, big_event)
+        
+        update_other_spaceships()
+        update_my_spaceships()
+
 
         #if PLAYER.is_dead():
             #sound1.set_volume(0)

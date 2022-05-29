@@ -8,7 +8,6 @@ import time
 
 from shots import *
 from opponent import *
-from network_helper import *
 from player import *
 from star import *
 from sun import *
@@ -32,9 +31,6 @@ def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
         gravity(spaceship, SUN, PLANETS)
         spaceship.update(surface)
     
-    update_other_spaceships()
-    update_my_spaceships()
-
     speed = "{:.2f}".format(
         math.sqrt((SCREEN_FOCUS.x_speed ** 2) + (SCREEN_FOCUS.y_speed ** 2)))
     
