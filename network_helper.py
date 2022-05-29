@@ -56,7 +56,7 @@ def detailed_data(spaceship):
         "owners_name": spaceship.owners_name,
         "pos": [round(spaceship.pos[0]), round(spaceship.pos[1])],
         "angle": round(spaceship.angle),
-        "speed": [round(spaceship.x_speed), round(spaceship.y_speed)]
+        "speed": [round(spaceship.x_speed), round(spaceship.y_speed)],
         "spaceship": spaceship.spaceship
     }
     return a
@@ -77,9 +77,9 @@ def update_other_spaceships():
     print("R", hihi)
     for n in hihi:
         if is_it_passby(hihi):
-            passby_update(hihi[1])
+            passby_update(hihi)
         else:
-            spaceship_check(hihi[1])
+            spaceship_check(hihi)
 
 def update_my_spaceships():
     for n in MY_SPACESHIPS:
