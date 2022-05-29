@@ -31,11 +31,7 @@ def recive_data():
         for hihi in n:
             final.append(hihi)
     
-    try:
-        final[0]["spaceship"]
-    except:
-        return [0, final]
-    return [1, final]
+    return [final]
 
 def send_my_data(my_spaceships):
     a = []
@@ -48,12 +44,19 @@ def send_my_data(my_spaceships):
     
     send(a)
         
+def is_it_passby(a):
+    try:
+        a["spaceship"]
+    except:
+        return True
+    return False
 
 def detailed_data(spaceship):
     a = {
         "owners_name": spaceship.owners_name,
         "pos": [round(spaceship.pos[0]), round(spaceship.pos[1])],
         "angle": round(spaceship.angle),
+        "speed": [round(spaceship.x_speed), round(spaceship.y_speed)]
         "spaceship": spaceship.spaceship
     }
     return a
@@ -72,10 +75,11 @@ OTHER_SPACESHIPS = pygame.sprite.Group()
 def update_other_spaceships():
     hihi = recive_data()
     print("R", hihi)
-    if hihi[0] == 0:
-        passby_update(hihi[1])
-    else:
-        spaceship_check(hihi[1])
+    for n in hihi:
+        if is_it_passby(hihi):
+            passby_update(hihi[1])
+        else:
+            spaceship_check(hihi[1])
 
 def update_my_spaceships():
     for n in MY_SPACESHIPS:
@@ -96,6 +100,7 @@ def spaceship_check(detailed_data):
     other_names = [i.owners_name for i in OTHER_SPACESHIPS]
 
     for n in detailed_data:
+        print("N", n)
         name_of_new = n["owners_name"]
         if other_names.__contains__(name_of_new):
             already_existing = OTHER_SPACESHIPS.sprites()[other_names.index(name_of_new)]
@@ -104,6 +109,8 @@ def spaceship_check(detailed_data):
             drift_angle = n["angle"] - already_existing.angle
             already_existing.correct_drift = [drift_x / 15, drift_y / 15]
             already_existing.correct_rotating_drift = drift_angle / 15
+            already_existing.x_speed = n["speed"][0]
+            already_existing.x_speed = n["speed"][1]
         elif not all_names.__contains__(name_of_new):
             print("THIS SHOULD NOT HAVE HAPPENED!")
             new_spacehip = Spaceship(n["spaceship"], n["owners_name"], n["pos"])
