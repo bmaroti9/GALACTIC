@@ -96,8 +96,11 @@ class Spaceship(pygame.sprite.Sprite):
         if self.gun_timer > 0:
             self.gun_timer -= 1
         
-        self.pos[0] += self.x_speed + self.correct_drift[0]
-        self.pos[1] += self.y_speed + self.correct_drift[1]
+        self.pos[0] += self.x_speed
+        self.pos[1] += self.y_speed
+
+        self.x_speed += self.correct_drift[0]
+        self.y_speed += self.correct_drift[1]
 
         self.angle += self.turning + self.correct_rotating_drift
         self.turning = self.turning * 0.92
