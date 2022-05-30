@@ -38,6 +38,11 @@ class Spaceship(pygame.sprite.Sprite):
         self.correct_drift = [0, 0]
         self.correct_rotating_drift = 0
         self.controll = [0, 0, 0, 0]
+
+        screen_focus = get_screen_focus()
+        
+        self.real_x = screen_focus.pos[0] - self.pos[0] + surface.get_width() / 2
+        self.real_y = screen_focus.pos[1] - self.pos[1] + surface.get_height() / 2
     
         self.flameless = pygame.image.load(
             "images/" + str(self.info["name"]) + ".png").convert_alpha()
