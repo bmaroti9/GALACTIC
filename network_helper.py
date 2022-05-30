@@ -63,7 +63,7 @@ def detailed_data(spaceship):
         "owners_name": spaceship.owners_name,
         "pos": [round(spaceship.pos[0]), round(spaceship.pos[1])],
         "angle": round(spaceship.angle),
-        "speed": [round(spaceship.x_speed), round(spaceship.y_speed)],
+        "speed": ["{:.2f}".format(spaceship.x_speed), "{:.2f}".format(spaceship.y_speed)],
         "spaceship": spaceship.spaceship
     }
     return a
