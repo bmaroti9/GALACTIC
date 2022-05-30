@@ -99,22 +99,21 @@ def spaceship_check(detailed_data):
     all_names = [i.owners_name for i in get_spaceships()]
     other_names = [i.owners_name for i in OTHER_SPACESHIPS]
 
-    for n in detailed_data:
-        print("N", n)
-        name_of_new = n["owners_name"]
-        if other_names.__contains__(name_of_new):
-            already_existing = OTHER_SPACESHIPS.sprites()[other_names.index(name_of_new)]
-            drift_x = n["pos"][0] - already_existing.pos[0]
-            drift_y = n["pos"][1] - already_existing.pos[1]
-            drift_angle = n["angle"] - already_existing.angle
-            already_existing.correct_drift = [drift_x / 15, drift_y / 15]
-            already_existing.correct_rotating_drift = drift_angle / 15
-            already_existing.x_speed = n["speed"][0]
-            already_existing.x_speed = n["speed"][1]
-        elif not all_names.__contains__(name_of_new):
-            print("THIS SHOULD NOT HAVE HAPPENED!", n)
-            new_spacehip = Spaceship(n["spaceship"], n["owners_name"], n["pos"])
-            OTHER_SPACESHIPS.add(new_spacehip)
+    print("N", detailed_data)
+    name_of_new = detailed_data["owners_name"]
+    if other_names.__contains__(name_of_new):
+        already_existing = OTHER_SPACESHIPS.sprites()[other_names.index(name_of_new)]
+        drift_x = detailed_data["pos"][0] - already_existing.pos[0]
+        drift_y = detailed_data["pos"][1] - already_existing.pos[1]
+        drift_angle = detailed_data["angle"] - already_existing.angle
+        already_existing.correct_drift = [drift_x / 15, drift_y / 15]
+        already_existing.correct_rotating_drift = drift_angle / 15
+        already_existing.x_speed = detailed_data["speed"][0]
+        already_existing.x_speed = detailed_data["speed"][1]
+    elif not all_names.__contains__(name_of_new):
+        print("THIS SHOULD NOT HAVE HAPPENED!", detailed_data)
+        new_spacehip = Spaceship(n["spaceship"], detailed_data["owners_name"], detailed_data["pos"])
+        OTHER_SPACESHIPS.add(new_spacehip)
 
         
 
@@ -124,11 +123,11 @@ def passby_update(passby_data):
     
     other_names = [i.owners_name for i in OTHER_SPACESHIPS]
 
-    for n in passby_data:
-        name_of_new = n["owners_name"]
-        if other_names.__contains__(name_of_new):
-            spaceship = OTHER_SPACESHIPS.sprites()[other_names.index(name_of_new)]
-            spaceship.feed_input(n["inputs"])
+    print("Pudzi makes sure", passby_data)
+    name_of_new = passby_data["owners_name"]
+    if other_names.__contains__(name_of_new):
+        spaceship = OTHER_SPACESHIPS.sprites()[other_names.index(name_of_new)]
+        spaceship.feed_input(passby_data["inputs"])
 
 def get_spaceships():
     spaceships = []
