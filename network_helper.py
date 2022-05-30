@@ -120,7 +120,7 @@ def spaceship_check(detailed_data):
         drift_x = detailed_data["pos"][0] - already_existing.pos[0]
         drift_y = detailed_data["pos"][1] - already_existing.pos[1]
         drift_angle = detailed_data["angle"] - already_existing.angle
-        already_existing.correct_drift = [drift_x / 36, drift_y / 36]
+        already_existing.correct_drift = [drift_x / 8, drift_y / 8]
         already_existing.correct_rotating_drift = drift_angle / 8
         already_existing.x_speed = detailed_data["speed"][0]
         already_existing.y_speed = detailed_data["speed"][1]
