@@ -109,13 +109,17 @@ def spaceship_check(detailed_data):
         already_existing.correct_drift = [drift_x / 15, drift_y / 15]
         already_existing.correct_rotating_drift = drift_angle / 15
         already_existing.x_speed = detailed_data["speed"][0]
-        already_existing.x_speed = detailed_data["speed"][1]
+        already_existing.y_speed = detailed_data["speed"][1]
+        already_existing.no_signal_alarm = 0
     elif not all_names.__contains__(name_of_new):
         print("THIS SHOULD NOT HAVE HAPPENED!", detailed_data)
         new_spacehip = Spaceship(detailed_data["spaceship"], detailed_data["owners_name"], 
                 detailed_data["pos"])
         OTHER_SPACESHIPS.add(new_spacehip)
-
+    
+    for n in OTHER_SPACESHIPS:
+        if n.no_signal_alarm > 10:
+            del OTHER_SPACESHIPS[OTHER_SPACESHIPS.index(n)]
         
 
 def passby_update(passby_data):
@@ -129,6 +133,7 @@ def passby_update(passby_data):
     if other_names.__contains__(name_of_new):
         spaceship = OTHER_SPACESHIPS.sprites()[other_names.index(name_of_new)]
         spaceship.feed_input(passby_data["inputs"])
+        spaceship.no_signal_alarm += 1
 
 def get_spaceships():
     spaceships = []
