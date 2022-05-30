@@ -112,7 +112,8 @@ def spaceship_check(detailed_data):
         already_existing.x_speed = detailed_data["speed"][1]
     elif not all_names.__contains__(name_of_new):
         print("THIS SHOULD NOT HAVE HAPPENED!", detailed_data)
-        new_spacehip = Spaceship(n["spaceship"], detailed_data["owners_name"], detailed_data["pos"])
+        new_spacehip = Spaceship(detailed_data["spaceship"], detailed_data["owners_name"], 
+                detailed_data["pos"])
         OTHER_SPACESHIPS.add(new_spacehip)
 
         
