@@ -82,7 +82,7 @@ def update_other_spaceships():
                 passby_update(x)
     
     for n in OTHER_SPACESHIPS:
-        if n.no_signal_alarm > 10:
+        if n.no_signal_alarm > 32:
             n.kill()
 
 def update_my_spaceships():
