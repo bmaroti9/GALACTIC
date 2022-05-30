@@ -119,7 +119,7 @@ def spaceship_check(detailed_data):
     
     for n in OTHER_SPACESHIPS:
         if n.no_signal_alarm > 10:
-            del OTHER_SPACESHIPS[OTHER_SPACESHIPS.sprites().index(n)]
+            n.kill()
         
 
 def passby_update(passby_data):
