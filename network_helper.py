@@ -76,10 +76,10 @@ def update_other_spaceships():
         for x in n:
             print("P", x)
             if is_it_detailed(x):
-                passby_update(x)
-            else:
                 print("SHOULD HAVE ADDED 1111111111111111111111111111111111111111111111")
                 spaceship_check(x)
+            else:
+                passby_update(x)
 
 def update_my_spaceships():
     for n in MY_SPACESHIPS:
