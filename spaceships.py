@@ -26,7 +26,6 @@ class Spaceship(pygame.sprite.Sprite):
         self.spaceship = spaceship
         self.owners_name = owners_name
         self.angle = 0
-        self.no_signal_alarm = 0
         self.turning = 0
         self.x_speed = 0
         self.y_speed = 0

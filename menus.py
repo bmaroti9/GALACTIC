@@ -115,6 +115,8 @@ def start_menu(surface, CLOCK, sound1):
 
         pygame.display.update()
         CLOCK.tick(20)
+    
+    send_kill_me()
 
 
 def game(surface, CLOCK, sound1, load):

@@ -43,9 +43,20 @@ def send_my_data(my_spaceships):
             a.append(passby_data(n))
     print("S", a)
     send(a)
+
+def send_kill_me():
+    a = {
+        "kill" : personal_name()
+    }
+    return a
         
-def is_it_detailed(a):
-    return "spaceship" in a
+def return_kind_of_message(a):
+    if "spaceship" in a:
+        return "d"
+    elif "kill" in a:
+        return "k"
+    else:
+        return "p"
 
 def detailed_data(spaceship):
     a = {
@@ -75,15 +86,14 @@ def update_other_spaceships():
         print("list_of_recived_from_only_one_other", n)
         for x in n:
             print("P", x)
-            if is_it_detailed(x):
+            kind = return_kind_of_message(x)
+            if kind == "d":
                 print("SHOULD HAVE ADDED 1111111111111111111111111111111111111111111111")
                 spaceship_check(x)
-            else:
+            elif kind == "p":
                 passby_update(x)
-    
-    for n in OTHER_SPACESHIPS:
-        if n.no_signal_alarm > 105:
-            n.kill()
+            elif kind == "k":
+                kill_one_player(x["kill"])
 
 def update_my_spaceships():
     for n in MY_SPACESHIPS:
@@ -114,7 +124,6 @@ def spaceship_check(detailed_data):
         already_existing.correct_rotating_drift = drift_angle / 8
         already_existing.x_speed = detailed_data["speed"][0]
         already_existing.y_speed = detailed_data["speed"][1]
-        already_existing.no_signal_alarm = 0
     elif not all_names.__contains__(name_of_new):
         print("THIS SHOULD NOT HAVE HAPPENED!", detailed_data)
         new_spacehip = Spaceship(detailed_data["spaceship"], detailed_data["owners_name"], 
@@ -133,7 +142,6 @@ def passby_update(passby_data):
     if other_names.__contains__(name_of_new):
         spaceship = OTHER_SPACESHIPS.sprites()[other_names.index(name_of_new)]
         spaceship.feed_input(passby_data["inputs"])
-        spaceship.no_signal_alarm += 1
 
 def get_spaceships():
     spaceships = []
@@ -149,3 +157,11 @@ def add_to_my_spaceships(item):
     global MY_SPACESHIPS
 
     MY_SPACESHIPS.add(item)
+
+def kill_one_player(personal_name):
+    spaceships = get_spaceships()
+    
+    other_names = [i.owners_name for i in spaceships]
+    already_existing = spaceships.sprites()[other_names.index(personal_name)]
+    already_existing.kill()
+
