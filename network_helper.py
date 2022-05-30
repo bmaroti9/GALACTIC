@@ -80,6 +80,10 @@ def update_other_spaceships():
                 spaceship_check(x)
             else:
                 passby_update(x)
+    
+    for n in OTHER_SPACESHIPS:
+        if n.no_signal_alarm > 10:
+            n.kill()
 
 def update_my_spaceships():
     for n in MY_SPACESHIPS:
@@ -116,10 +120,6 @@ def spaceship_check(detailed_data):
         new_spacehip = Spaceship(detailed_data["spaceship"], detailed_data["owners_name"], 
                 detailed_data["pos"])
         OTHER_SPACESHIPS.add(new_spacehip)
-    
-    for n in OTHER_SPACESHIPS:
-        if n.no_signal_alarm > 10:
-            n.kill()
         
 
 def passby_update(passby_data):
