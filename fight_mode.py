@@ -6,7 +6,7 @@ import pygame
 from pygame.locals import *
 import time
 
-from shots import *
+from weapons import *
 from opponent import *
 from player import *
 from star import *
@@ -14,7 +14,7 @@ from sun import *
 
 def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
     SPACESHIPS = get_spaceships()
-    print("L", SPACESHIPS)
+    #print("L", SPACESHIPS)
     surface.fill((30, 30, 45))
 
     for star in STARS:
@@ -42,6 +42,7 @@ def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
     SCREEN_FOCUS.update(SPACESHIPS)
 
     update_shots(surface)
+    update_bombs(surface, SPACESHIPS)
 
     hihi = fonts[0].render(
         "Speed:  " + speed, True, ((200, 0, 0)))

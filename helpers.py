@@ -18,6 +18,18 @@ with open("names_first.txt", "r") as f:
 with open("names_last.txt", "r") as f:
     LAST_NAMES = json.load(f)
 
+VOLUME = 0
+
+def add_volume(amount):
+    global VOLUME
+    VOLUME += amount
+
+def get_volume():
+    global VOLUME
+    a = VOLUME
+    VOLUME = 0
+    return a
+
 class Screen_focus(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()

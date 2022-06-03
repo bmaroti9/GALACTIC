@@ -4,7 +4,7 @@ from pygame.locals import *
 import random
 
 from helpers import *
-from shots import *
+from weapons import *
 from reasources import *
 
 with open("ships.txt", "r") as f:

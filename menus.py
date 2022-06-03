@@ -7,7 +7,7 @@ from pygame.locals import *
 import time
 import json
 
-from shots import *
+from weapons import *
 from player import *
 from opponent import *
 from star import *
@@ -19,6 +19,7 @@ from person import *
 from spaceships import *
 from Joystick import *
 from network_helper import *
+from screen_shake import *
 
 # pygame.init()
 SCORE_FONT = pygame.font.SysFont("Verdana", 16)
@@ -150,6 +151,8 @@ def game(surface, CLOCK, sound1, load):
     THRUST.set_volume(0)
     sound1.set_volume(0.1)
 
+    SHAKES = pygame.Surface([surface.get_width(), surface.get_height()])
+    offset = repeat((0, 0))
 
     screen_f = get_screen_focus()
     #buttons = JOYSTICK.get_button()
@@ -177,9 +180,11 @@ def game(surface, CLOCK, sound1, load):
                     scroll = 0.88
 
         # print(pygame.key.get_mods())
+        surface.fill((250, 150, 0))
+        SHAKES.fill((0, 0, 0))
 
         if screen_f.mode == 1:
-            fight_mode(surface, STARS,
+            fight_mode(SHAKES, STARS,
                        THRUST, SUN, [SCORE_FONT, MUSIC_FONT], PLANETS, PERSON)
         elif screen_f.mode == -1:
             map_mode(surface, LABEL_FONT, screen_f, SUN, scroll, PLANETS)
@@ -190,6 +195,14 @@ def game(surface, CLOCK, sound1, load):
         update_other_spaceships()
         update_my_spaceships()
 
+        volume = get_volume()
+        if volume > 0: 
+            print("supposed to shake", volume)
+            offset = shake(volume, volume // 5, volume // 2)
+        elif random.randint(0, 40) == 0:
+            #offset = shake(13, 6, 8)
+            pass
+        surface.blit(SHAKES, next(offset))
 
         #if PLAYER.is_dead():
             #sound1.set_volume(0)

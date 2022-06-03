@@ -41,7 +41,7 @@ def send_my_data(my_spaceships):
     else:
         for n in my_spaceships:
             a.append(passby_data(n))
-    print("S", a)
+    #print("S", a)
     send(a)
 
 def send_kill_me():
@@ -81,14 +81,14 @@ OTHER_SPACESHIPS = pygame.sprite.Group()
 
 def update_other_spaceships():
     hihi = recive_data()
-    print("R", hihi)
+    #print("R", hihi)
     for n in hihi:
-        print("list_of_recived_from_only_one_other", n)
+        #print("list_of_recived_from_only_one_other", n)
         for x in n:
-            print("P", x)
+            #print("P", x)
             kind = return_kind_of_message(x)
             if kind == "d":
-                print("SHOULD HAVE ADDED 1111111111111111111111111111111111111111111111")
+                #print("SHOULD HAVE ADDED 1111111111111111111111111111111111111111111111")
                 spaceship_check(x)
             elif kind == "p":
                 passby_update(x)
@@ -99,7 +99,12 @@ def update_my_spaceships():
     for n in MY_SPACESHIPS:
         if n.owners_name == personal_name():
             keys = pygame.key.get_pressed()
-            inputs = [keys[pygame.K_UP], keys[pygame.K_RIGHT], keys[pygame.K_LEFT], keys[pygame.K_SPACE]]
+            weapon = 0
+            if keys[pygame.K_SPACE]:
+                weapon = 1
+            elif keys[pygame.K_b]:
+                weapon = 2
+            inputs = [keys[pygame.K_UP], keys[pygame.K_RIGHT], keys[pygame.K_LEFT], weapon]
             n.feed_input(inputs)
         else:
             hihi = ez_nem_fog_mukodni
@@ -113,7 +118,7 @@ def spaceship_check(detailed_data):
     all_names = [i.owners_name for i in get_spaceships()]
     other_names = [i.owners_name for i in OTHER_SPACESHIPS]
 
-    print("N", detailed_data)
+    #print("N", detailed_data)
     name_of_new = detailed_data["owners_name"]
     if other_names.__contains__(name_of_new):
         already_existing = OTHER_SPACESHIPS.sprites()[other_names.index(name_of_new)]
@@ -125,7 +130,7 @@ def spaceship_check(detailed_data):
         already_existing.x_speed = detailed_data["speed"][0]
         already_existing.y_speed = detailed_data["speed"][1]
     elif not all_names.__contains__(name_of_new):
-        print("THIS SHOULD NOT HAVE HAPPENED!", detailed_data)
+        #print("THIS SHOULD NOT HAVE HAPPENED!", detailed_data)
         new_spacehip = Spaceship(detailed_data["spaceship"], detailed_data["owners_name"], 
                 detailed_data["pos"])
         OTHER_SPACESHIPS.add(new_spacehip)
@@ -137,7 +142,7 @@ def passby_update(passby_data):
     
     other_names = [i.owners_name for i in OTHER_SPACESHIPS]
 
-    print("Pudzi makes sure", passby_data)
+    #print("Pudzi makes sure", passby_data)
     name_of_new = passby_data["owners_name"]
     if other_names.__contains__(name_of_new):
         spaceship = OTHER_SPACESHIPS.sprites()[other_names.index(name_of_new)]

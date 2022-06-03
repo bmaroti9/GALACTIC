@@ -5,7 +5,7 @@ import random
 import json
 
 from helpers import *
-from shots import *
+from weapons import *
 from reasources import *
 from sun import *
 from person import *
@@ -256,7 +256,14 @@ def controll_spaceship():
     #print(buttons)
     
     keys = pygame.key.get_pressed()
-    inputs = [keys[pygame.K_UP], keys[pygame.K_RIGHT], keys[pygame.K_LEFT], keys[pygame.K_SPACE]]
+    weapon = 0
+    if keys[pygame.K_SPACE]:
+        weapon = 1
+    elif keys[pygame.K_b]:
+        weapon = 2
+    
+    #print(weapon)
+    inputs = [keys[pygame.K_UP], keys[pygame.K_RIGHT], keys[pygame.K_LEFT], weapon]
 
     #inputs = [round(axes[1]) == -1, round(axes[0]) == 1, round(axes[0]) == -1, buttons[1]]
 
