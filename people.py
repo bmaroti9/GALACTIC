@@ -13,13 +13,14 @@ class Bot(pygame.sprite.Sprite):
         self.target = 0
         self.unaccurate = 0
         self.name = name
+        self.professional = random.randint(6, 60)
     
     def controll_spacehip(self, my_spaceship, all_spaceships):
-        if random.randint(0, 30) == 1:
+        if random.randint(0, 20) == 1:
             self.new_target(my_spaceship, all_spaceships)
         
         if random.randint(0, 60) == 1:
-            self.unaccurate = random.randint(-25, 25)
+            self.unaccurate = random.randint(self.professional, self.professional)
         
         inputs = [self.thrust, 0, 0, 0]
 
@@ -68,7 +69,7 @@ class Bot(pygame.sprite.Sprite):
         a = []
         for n in spaceships:
             x = distance(n.pos, my_spaceship.pos)
-            if x < random.randint(2500, 2500 * 1.5) and not n == my_spaceship:
+            if x < random.randint(3500, 5000) and not n == my_spaceship:
                 a.append(n)
 
         return a

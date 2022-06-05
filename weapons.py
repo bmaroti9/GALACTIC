@@ -25,7 +25,7 @@ class Shot(pygame.sprite.Sprite):
                 "images/shoot_" + str(color) + str(n + 1) + ".png")
             self.costumes.append(a)
 
-        self.angle = direction - 90
+        self.angle = direction + 90
 
         self.y = math.sin(self.angle / 180.0 * math.pi) * 10 + speeds[1]
         self.x = math.cos(self.angle / 180.0 * math.pi) * 10 + speeds[0]
@@ -42,9 +42,14 @@ class Shot(pygame.sprite.Sprite):
             if self.progress > self.ages[n] and self.progress <= self.ages[n + 1]:
                 self.image = self.costumes[n]
 
-        self.image = pygame.transform.rotozoom(self.image, -self.angle, self.zoom)
+        screen_focus = get_screen_focus()
+        
+        self.real_x = screen_focus.pos[0] - self.pos[0] + surface.get_width() / 2
+        self.real_y = screen_focus.pos[1] - self.pos[1] + surface.get_height() / 2
+
+        self.image = pygame.transform.rotozoom(self.image, (-self.angle) + 180, self.zoom)
         self.rect = self.image.get_rect()
-        self.rect.center = self.pos
+        self.rect.center = [self.real_x, self.real_y]
 
         surface.blit(self.image, self.rect)
 

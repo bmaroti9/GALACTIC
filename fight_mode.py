@@ -52,7 +52,7 @@ def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
         "playing: CoffeeRadio - STAR KNIGHT", True, ((200, 200, 200)))
 
     hühü = fonts[0].render(
-        "Score:  " + str("PLAYER.score"), True, ((200, 200, 200)))
+        "Score:  " + str(get_screen_focus().score), True, ((200, 200, 200)))
 
     hihi_rect = hihi.get_rect()
     hihi_rect.center = (surface.get_width() / 2 - 50, surface.get_height() - 20)
@@ -66,13 +66,11 @@ def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
     for n in SPACESHIPS:
         x = test_shots(n)
         if n.c and x and n.dead == 0 and pygame.sprite.collide_mask(x, n):
-            if not x.appointed == n.owners_name:
+            if not x.appointed == n:
                 n.dead = 3
                 x.kill()
                 set_focus(x.appointed)
-            if x.appointed == personal_name():
-                #PLAYER.score += 1
-                pass
+                x.appointed.score += 1
 
 def land_mode(surface, STARS, PLANETS, OPPONENTS, SUN, FR, PLAYER, PERSON, scroll, big_event):  
     

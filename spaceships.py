@@ -39,6 +39,7 @@ class Spaceship(pygame.sprite.Sprite):
         self.correct_drift = [0, 0]
         self.correct_rotating_drift = 0
         self.controll = [0, 0, 0, 0]
+        self.score = 0
 
         screen_focus = get_screen_focus()
         
@@ -82,9 +83,8 @@ class Spaceship(pygame.sprite.Sprite):
                       screen_focus.y_speed - self.y_speed)
 
             for n in self.info["guns"]:
-                hihi = rotating_position(n[0], n[1], self.angle,
-                                         (self.real_x, self.real_y))
-                add_shot(hihi, "orange", -self.angle, self, speeds)
+                hihi = rotating_position(n[0], n[1], self.angle - 180, self.pos)
+                add_shot(hihi, "orange", -self.angle, self, [self.x_speed, self.y_speed])
                 self.gun_timer = self.info['gun_timer']
             
             if len(self.info["guns"]) > 0:
