@@ -34,7 +34,7 @@ class Sun(pygame.sprite.Sprite):
         print(self.name)
         self.color = (250, 170, 0)
 
-    def update(self, surface, screen_focus, opponents):
+    def update(self, surface, screen_focus, spaceships):
         self.real_x = screen_focus.pos[0] - self.pos[0] + surface.get_width() / 2
         self.real_y = screen_focus.pos[1] - self.pos[1] + surface.get_height() / 2
         c = self.real_x > -self.size and self.real_x < surface.get_width() + self.size and \
@@ -44,11 +44,11 @@ class Sun(pygame.sprite.Sprite):
             pygame.draw.circle(surface, self.color, [
                                int(self.real_x), int(self.real_y)], self.size)
 
-            for n in opponents:
-                if distance(self.pos, n.pos) < self.size + 15 and n.dead == 0:
-                    n.dead = 1
-                    n.x_speed = 0
-                    n.y_speed = 0
+        for n in spaceships:
+            if distance(self.pos, n.pos) < self.size + 15 and n.dead == 0:
+                n.dead = 1
+                n.x_speed = 0
+                n.y_speed = 0
 
 
 class Planet(pygame.sprite.Sprite):

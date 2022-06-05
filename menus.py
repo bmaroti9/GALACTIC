@@ -20,6 +20,7 @@ from spaceships import *
 from Joystick import *
 from network_helper import *
 from screen_shake import *
+from people import *
 
 # pygame.init()
 SCORE_FONT = pygame.font.SysFont("Verdana", 16)
@@ -122,6 +123,9 @@ def start_menu(surface, CLOCK, sound1):
 
 def game(surface, CLOCK, sound1, load):
     time.sleep(0.2)
+    
+    kill_all_mine()
+    
     PERSON = Person(surface)
     SUN = Sun()
     SCORE = 0
@@ -131,8 +135,13 @@ def game(surface, CLOCK, sound1, load):
         STARS.append(Star(surface.get_width(), surface.get_height()))
 
     add_to_my_spaceships(Spaceship(random.randint(0, 5), personal_name(), [3800, 3800]))
-    #for _ in range(10):
-        #SPACESHIPS.add(Spaceship(surface, random.randint(0, 5)))
+    for _ in range(20):
+        name = random_name()
+        add_to_my_spaceships(Spaceship(random.randint(0, 5), name, 
+            [random.randint(-6000, 6000), random.randint(-6000, 6000)]))
+        add_bot(name)
+
+    set_focus(get_my_spacehip())
 
     PLANETS = pygame.sprite.Group()
     for _ in range(8):
@@ -173,6 +182,8 @@ def game(surface, CLOCK, sound1, load):
                     return start_menu(surface, CLOCK, sound1)
                 elif pygame.key.get_mods() == 2:
                     reverse_view_mode()
+                elif event.key == pygame.K_t:
+                    set_focus(random.choice(get_spaceships()))
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 4:
                     scroll = 1.12
@@ -180,25 +191,24 @@ def game(surface, CLOCK, sound1, load):
                     scroll = 0.88
 
         # print(pygame.key.get_mods())
-        surface.fill((250, 150, 0))
+        surface.fill((0, 0, 0))
         SHAKES.fill((0, 0, 0))
 
         if screen_f.mode == 1:
             fight_mode(SHAKES, STARS,
                        THRUST, SUN, [SCORE_FONT, MUSIC_FONT], PLANETS, PERSON)
         elif screen_f.mode == -1:
-            map_mode(surface, LABEL_FONT, screen_f, SUN, scroll, PLANETS)
+            map_mode(SHAKES, LABEL_FONT, screen_f, SUN, scroll, PLANETS)
         else:
-            land_mode(surface, STARS, PLANETS,
+            land_mode(SHAKES, STARS, PLANETS,
                       OPPONENTS, SUN, FR, screen_f, PERSON, scroll, big_event)
         
         update_other_spaceships()
         update_my_spaceships()
 
         volume = get_volume()
-        if volume > 0: 
-            print("supposed to shake", volume)
-            offset = shake(volume, volume // 5, volume // 2)
+        if volume > 1: 
+            offset = shake(volume, max(volume // 4, 2), min(volume // 2, 40))
         elif random.randint(0, 40) == 0:
             #offset = shake(13, 6, 8)
             pass

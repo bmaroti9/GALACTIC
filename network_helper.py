@@ -10,6 +10,7 @@ import json
 from localnet import *
 from helpers import *
 from spaceships import *
+from people import *
 
 with open("networking.txt", "r") as f:
     NETWORK = json.load(f)
@@ -99,15 +100,11 @@ def update_my_spaceships():
     for n in MY_SPACESHIPS:
         if n.owners_name == personal_name():
             keys = pygame.key.get_pressed()
-            weapon = 0
-            if keys[pygame.K_SPACE]:
-                weapon = 1
-            elif keys[pygame.K_b]:
-                weapon = 2
-            inputs = [keys[pygame.K_UP], keys[pygame.K_RIGHT], keys[pygame.K_LEFT], weapon]
+            inputs = [keys[pygame.K_UP], keys[pygame.K_RIGHT], keys[pygame.K_LEFT], keys[pygame.K_SPACE]]
             n.feed_input(inputs)
         else:
-            hihi = ez_nem_fog_mukodni
+            inputs = get_bot_controll(n, get_spaceships())
+            n.feed_input(inputs)
     
     send_my_data(MY_SPACESHIPS)
 
@@ -169,4 +166,13 @@ def kill_one_player(personal_name):
     other_names = [i.owners_name for i in spaceships]
     already_existing = spaceships.sprites()[other_names.index(personal_name)]
     already_existing.kill()
+
+def get_my_spacehip():
+    names = [i.owners_name for i in MY_SPACESHIPS]
+    index = names.index(personal_name())
+    return MY_SPACESHIPS.sprites()[index]
+
+def kill_all_mine():
+    for n in MY_SPACESHIPS:
+        n.kill()
 

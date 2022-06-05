@@ -28,30 +28,43 @@ def get_volume():
     global VOLUME
     a = VOLUME
     VOLUME = 0
-    return a
+    return int(a)
 
 class Screen_focus(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-
+        
+        self.focus = 0
         self.pos = [0, 0]
         self.mode = 1
         self.x_speed = 0
         self.y_speed = 0
         self.name_of_focus = 0
     
-    def update(self, SPACESHIPS):
-        try:
-            focus_on = SPACESHIPS[0]
-            self.pos = focus_on.pos
-            self.x_speed = focus_on.x_speed
-            self.y_speed = focus_on.y_speed
-        except:
+    def update(self, spaceships):
+        self.pos = self.focus.pos
+        self.x_speed = self.focus.x_speed
+        self.y_speed = self.focus.y_speed
+        if self.focus.dead == 2:
             self.x_speed = 0
             self.y_speed = 0
+            try:    
+                self.focus = random.choice(spaceships)
+            except:
+                pass
         
 
 SCREEN_FOCUS = Screen_focus()
+
+def get_distance_from_focus(pos):
+    a = distance(SCREEN_FOCUS.pos, pos)
+    return a
+
+def set_focus(on):
+    SCREEN_FOCUS.focus = on
+
+def update_screen_focus(spaceships):
+    SCREEN_FOCUS.update(spaceships)
 
 def get_screen_focus():
     return SCREEN_FOCUS
@@ -86,6 +99,9 @@ def distance(a, b):
 def retrogade(x, y):
     x = 0 - (math.atan2(y, x) / math.pi * 180) - 90
     return x
+
+def rev_percent(num, out_of):
+    return (out_of - num) / out_of
 
 
 def real_angle(target, position):
@@ -285,4 +301,38 @@ def fake_transparent(color1, color2, percent):
 def every_ticks(gap):
     if pygame.time.get_ticks() % gap == 0:
         return True
+    return False
+
+BUTTON_NAMES = []
+BUTTON_STATE = []
+
+def check_released(button):
+    if not BUTTON_NAMES.__contains__(button):
+        BUTTON_NAMES.append(button)
+        BUTTON_STATE.append(False)
+
+    x = BUTTON_NAMES.index(button)
+
+    if int(button) > 12:
+        key = pygame.key.get_pressed()
+        #if button.isdigit():
+            #button = int(button)
+
+        if key[button]:
+            if not BUTTON_STATE[x]:
+                BUTTON_STATE[x] = True
+                return True
+        else:
+            BUTTON_STATE[x] = False
+    else:
+        button = button % 3
+        hihi = pygame.mouse.get_pressed(3)[button]
+
+        if hihi:
+            if not BUTTON_STATE[x]:
+                BUTTON_STATE[x] = True
+                return True
+        else:
+            BUTTON_STATE[x] = False
+
     return False

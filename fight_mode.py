@@ -7,6 +7,7 @@ from pygame.locals import *
 import time
 
 from weapons import *
+from network_helper import *
 from opponent import *
 from player import *
 from star import *
@@ -39,7 +40,7 @@ def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
             retrogade(SCREEN_FOCUS.x_speed, SCREEN_FOCUS.y_speed) + 180, surface)
     guide_arrow(surface, SCREEN_FOCUS, fonts[0])
 
-    SCREEN_FOCUS.update(SPACESHIPS)
+    update_screen_focus(SPACESHIPS)
 
     update_shots(surface)
     update_bombs(surface, SPACESHIPS)
@@ -66,8 +67,9 @@ def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
         x = test_shots(n)
         if n.c and x and n.dead == 0 and pygame.sprite.collide_mask(x, n):
             if not x.appointed == n.owners_name:
-                n.dead = 1
+                n.dead = 3
                 x.kill()
+                set_focus(x.appointed)
             if x.appointed == personal_name():
                 #PLAYER.score += 1
                 pass

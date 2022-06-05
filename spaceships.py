@@ -18,6 +18,7 @@ class Spaceship(pygame.sprite.Sprite):
     def __init__(self, spaceship, owners_name, pos):
         super().__init__()
 
+        self.wehicle_code = random.randint(0, 9999999999)
         self.sound = pygame.mixer.Sound("Sounds/engine-sound.wav")
         self.sound.play(-1)
         self.sound.set_volume(0)
@@ -76,27 +77,26 @@ class Spaceship(pygame.sprite.Sprite):
         if self.controll[2]:
             self.turning += self.info["turning"] * 1.4
 
-        if self.controll[3] == 1 and self.gun_timer == 0:
-            print('shooting')
+        if self.controll[3] and self.gun_timer == 0:
             speeds = (screen_focus.x_speed - self.x_speed,
                       screen_focus.y_speed - self.y_speed)
 
             for n in self.info["guns"]:
                 hihi = rotating_position(n[0], n[1], self.angle,
                                          (self.real_x, self.real_y))
-                add_shot(hihi, "purple", -self.angle, self.owners_name, speeds)
+                add_shot(hihi, "orange", -self.angle, self, speeds)
                 self.gun_timer = self.info['gun_timer']
             
             if len(self.info["guns"]) > 0:
                 self.sound2.stop()
                 self.sound2.play()
-                add_volume(20)
+                add_volume((400 - get_distance_from_focus(self.pos)) / 20)
                 self.sound2.set_volume(0.2)
         
-        if self.controll[3] == 2:
-            print("almost")
-            if every_ticks(5):
-                add_bomb([self.real_x, self.real_y], [self.x_speed, self.y_speed])
+        #if self.controll[3] == 2:
+            #print("almost")
+            #if every_ticks(5):
+                #add_bomb([self.real_x, self.real_y], [self.x_speed, self.y_speed])
         
         if self.gun_timer > 0:
             self.gun_timer -= 1
@@ -110,7 +110,7 @@ class Spaceship(pygame.sprite.Sprite):
         j = 1000 / (distance(self.pos, screen_focus.pos) + 0.00000001)
         if self.dead > 0:
             if self.dead == 4:
-                add_volume(100)
+                add_volume((400 - get_distance_from_focus(self.pos)) / 5)
             
             index = 0
             for n in self.dead_costumes:
@@ -138,11 +138,14 @@ class Spaceship(pygame.sprite.Sprite):
                 self.kill()
     
         elif self.controll[0]:
+            #increase = ((self.info["max_speed"] - (distance([0, 0], [self.x_speed, 
+                    #self.y_speed]))) / (rev_percent(self.info["acceleration"], 20) * 10))
+
             self.x_speed += math.sin(self.angle / 180.0 * math.pi) * self.info["engine_efficiancy"]
             self.y_speed += math.cos(self.angle / 180.0 * math.pi) * self.info["engine_efficiancy"]
             self.to_draw = self.flames[random.randint(0, 3)]
-            if random.randint(0, 2) == 0:
-                add_volume(10)
+            if random.randint(0, 3) == 0 and self.gun_timer < 16:
+                add_volume((400 - get_distance_from_focus(self.pos)) / 80)
         else:
             self.to_draw = self.flameless
 
