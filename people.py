@@ -4,9 +4,10 @@ from pygame.locals import *
 import random
 
 from helpers import *
+from sun import *
 
 class Bot(pygame.sprite.Sprite):
-    def __init__(self, name):
+    def __init__(self, name, sun, planets):
         super().__init__()
 
         self.thrust = 0
@@ -14,9 +15,11 @@ class Bot(pygame.sprite.Sprite):
         self.unaccurate = 0
         self.name = name
         self.professional = random.randint(6, 60)
+        self.sun = sun
+        self.planets = planets
     
     def controll_spacehip(self, my_spaceship, all_spaceships):
-        if random.randint(0, 20) == 1:
+        if random.randint(0, 12) == 1:
             self.new_target(my_spaceship, all_spaceships)
         
         if random.randint(0, 60) == 1:
@@ -40,6 +43,7 @@ class Bot(pygame.sprite.Sprite):
         everybody = self.get_list_of_in_range(my_spaceship, all_spaceships)
 
         if len(everybody) > 0:
+            force = gravity(my_spaceship, self.sun, self.planets)
             best = math.inf
             best_angle = 0
             for n in everybody:
@@ -47,6 +51,9 @@ class Bot(pygame.sprite.Sprite):
                 y = (my_spaceship.y_speed - n.y_speed) ** 3
                 x += (my_spaceship.pos[0] - n.pos[0]) * 0.32
                 y += (my_spaceship.pos[1] - n.pos[1]) * 0.32
+                
+                x += ((force[0] * 140) ** 18)
+                y += ((force[1] * 140) ** 18)
 
                 angle = calculate_angle([0, 0], [x, y]) + 180
                 speed = math.sqrt((x ** 2) + (y ** 2))
@@ -76,8 +83,8 @@ class Bot(pygame.sprite.Sprite):
 
 BOTS = pygame.sprite.Group()
 
-def add_bot(name):
-    BOTS.add(Bot(name))
+def add_bot(name, sun, planets):
+    BOTS.add(Bot(name, sun, planets))
 
 def dell_all_bots():
     global BOTS

@@ -29,7 +29,9 @@ def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
     update_reasources(surface)
 
     for spaceship in SPACESHIPS:
-        gravity(spaceship, SUN, PLANETS)
+        a = gravity(spaceship, SUN, PLANETS)
+        spaceship.x_speed += a[0]
+        spaceship.y_speed += a[1]
         spaceship.update(surface)
     
     speed = "{:.2f}".format(

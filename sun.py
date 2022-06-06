@@ -168,8 +168,7 @@ def gravity(you, sun, planets):
         x += ((n.pos[0] - you.pos[0]) / (dis ** 2.5)) * weight * 0.0008
         y += ((n.pos[1] - you.pos[1]) / (dis ** 2.5)) * weight * 0.0008
 
-    you.x_speed += x
-    you.y_speed += y
+    return [x, y]
 
 def calculate_trading_routes(PLANET, PLANETS):
     #finds average
@@ -186,6 +185,3 @@ def calculate_trading_routes(PLANET, PLANETS):
     average_reasources.reverse()
 
     #finds 
-
-    
-

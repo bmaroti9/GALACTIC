@@ -6,7 +6,7 @@ import pygame
 from pygame.locals import *
 import time
 
-from map_mode import *
+#from map_mode import *
 
 pygame.init()
 

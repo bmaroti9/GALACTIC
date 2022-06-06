@@ -127,7 +127,12 @@ def game(surface, CLOCK, sound1, load):
     kill_all_mine()
     
     PERSON = Person(surface)
+    
     SUN = Sun()
+    PLANETS = pygame.sprite.Group()
+    for _ in range(8):
+        PLANETS.add(Planet(SUN, PLANETS, surface))
+
     SCORE = 0
     STARS = []
     x = round((surface.get_height() * surface.get_width()) // 3000)
@@ -135,17 +140,13 @@ def game(surface, CLOCK, sound1, load):
         STARS.append(Star(surface.get_width(), surface.get_height()))
 
     add_to_my_spaceships(Spaceship(random.randint(0, 5), personal_name(), [3800, 3800]))
-    for _ in range(20):
+    for _ in range(40):
         name = random_name()
         add_to_my_spaceships(Spaceship(random.randint(0, 5), name, 
             [random.randint(-6000, 6000), random.randint(-6000, 6000)]))
-        add_bot(name)
+        add_bot(name, SUN, PLANETS)
 
     set_focus(get_my_spacehip())
-
-    PLANETS = pygame.sprite.Group()
-    for _ in range(8):
-        PLANETS.add(Planet(SUN, PLANETS, surface))
 
     kill_shots()
 
@@ -210,8 +211,7 @@ def game(surface, CLOCK, sound1, load):
         if volume > 1: 
             offset = shake(volume, max(volume // 4, 2), min(volume // 2, 40))
         elif random.randint(0, 40) == 0:
-            #offset = shake(13, 6, 8)
-            pass
+            offset = shake(3, 6, 2)
         surface.blit(SHAKES, next(offset))
 
         #if PLAYER.is_dead():
