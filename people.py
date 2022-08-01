@@ -1,3 +1,4 @@
+from cmath import sqrt
 import math
 import pygame
 from pygame.locals import *
@@ -42,8 +43,14 @@ class Bot(pygame.sprite.Sprite):
     def new_target(self, my_spaceship, all_spaceships):
         everybody = self.get_list_of_in_range(my_spaceship, all_spaceships)
 
-        if len(everybody) > 0:
-            force = gravity(my_spaceship, self.sun, self.planets)
+        g = gravity(my_spaceship, self.sun, self.planets)
+        hehe = distance([my_spaceship.x_speed, my_spaceship.y_speed], g)
+        print(hehe)
+
+        if hehe < 1.4:
+            self.target = (calculate_angle(g, [0, 0]) + self.unaccurate) % 360
+            self.thrust = 1
+        elif len(everybody) > 0:
             best = math.inf
             best_angle = 0
             for n in everybody:

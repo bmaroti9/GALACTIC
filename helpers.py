@@ -123,6 +123,12 @@ def real_angle(target, position):
 def intpos(pos):
     return (int(pos[0]), int(pos[1]))
 
+def perfect_squared(value, squared):
+    x = value * 10000
+    x = x ** squared
+    x = x / 10000
+    return x
+
 
 def button(surface, text, font, text_color, rect_color, pos, width, tuch_color, bonus_pos=[0, 0]):
     hihi = font.render(

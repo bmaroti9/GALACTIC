@@ -71,7 +71,8 @@ def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
             if not x.appointed == n:
                 n.dead = 1
                 x.kill()
-                set_focus(x.appointed)
+                if get_screen_focus().focus == n:
+                    set_focus(x.appointed)
                 x.appointed.score += 1
 
 def land_mode(surface, STARS, PLANETS, OPPONENTS, SUN, FR, PLAYER, PERSON, scroll, big_event):  

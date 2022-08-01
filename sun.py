@@ -47,6 +47,7 @@ class Sun(pygame.sprite.Sprite):
         for n in spaceships:
             if distance(self.pos, n.pos) < self.size + 15 and n.dead == 0:
                 n.dead = 1
+                print("died of SUN")
                 n.x_speed = 0
                 n.y_speed = 0
 
