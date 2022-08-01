@@ -70,7 +70,18 @@
     "Thélyn",
     "Noooon",
     "Ktua",
-    "Lulal"
+    "Lulal",
+    "Voldemort's vacation center",
+    "Exagol",
+    "Cash$$$_;)",
+    "OldJay",
+    "Jambu",
+    "JohnBoo!",
+    "PinappleApplePan",
+    "PinappleApplePan2",
+    "PinappleApplePan3",
+    "The_DARK_side_of_the_force",
+    "Peacefull_Strawberry"
   ],
   "city1": [
     "Ul",

@@ -139,19 +139,19 @@ def game(surface, CLOCK, sound1, load):
     for _ in range(x):
         STARS.append(Star(surface.get_width(), surface.get_height()))
 
-    add_to_my_spaceships(Spaceship(random.randint(0, 5), personal_name(), [3800, 3800]))
-    for _ in range(40):
+    add_to_my_spaceships(Spaceship(random.randint(0, 0), personal_name(), [4000, 4000]))
+    for _ in range(20):
         name = random_name()
         add_to_my_spaceships(Spaceship(random.randint(0, 5), name, 
-            [random.randint(-6000, 6000), random.randint(-6000, 6000)]))
+            [random.randint(400, 11000), random.randint(4000, 11000)]))
         add_bot(name, SUN, PLANETS)
 
     set_focus(get_my_spacehip())
 
     kill_shots()
 
-    if load:
-        loading(PLAYER, OPPONENTS, PLANETS, SUN)
+    #if load:
+        #loading(PLAYER, OPPONENTS, PLANETS, SUN)
 
     for n in PLANETS:
         n.after_loading(surface, load)
@@ -201,17 +201,17 @@ def game(surface, CLOCK, sound1, load):
         elif screen_f.mode == -1:
             map_mode(SHAKES, LABEL_FONT, screen_f, SUN, scroll, PLANETS)
         else:
-            land_mode(SHAKES, STARS, PLANETS,
-                      OPPONENTS, SUN, FR, screen_f, PERSON, scroll, big_event)
+            #land_mode(SHAKES, STARS, PLANETS,
+                      #OPPONENTS, SUN, FR, screen_f, PERSON, scroll, big_event)
+            pass
         
         update_other_spaceships()
         update_my_spaceships()
 
         volume = get_volume()
         if volume > 1: 
-            offset = shake(volume, max(volume // 4, 2), min(volume // 2, 40))
-        elif random.randint(0, 40) == 0:
-            offset = shake(3, 6, 2)
+            offset = shake(volume, max(volume // 4, 2), min(volume // 2, 30))
+            #offset = shake(volume, 6, 2)
         surface.blit(SHAKES, next(offset))
 
         #if PLAYER.is_dead():

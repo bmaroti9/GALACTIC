@@ -22,7 +22,8 @@ VOLUME = 0
 
 def add_volume(amount):
     global VOLUME
-    VOLUME += amount
+    if amount >= 1:
+        VOLUME += amount
 
 def get_volume():
     global VOLUME
@@ -47,7 +48,7 @@ class Screen_focus(pygame.sprite.Sprite):
         self.pos = self.focus.pos
         self.x_speed = self.focus.x_speed
         self.y_speed = self.focus.y_speed
-        if self.focus.dead == 2:
+        if self.focus.dead == "Changed":
             self.x_speed = 0
             self.y_speed = 0
             try:    

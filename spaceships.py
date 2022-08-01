@@ -90,7 +90,7 @@ class Spaceship(pygame.sprite.Sprite):
             if len(self.info["guns"]) > 0:
                 self.sound2.stop()
                 self.sound2.play()
-                add_volume((400 - get_distance_from_focus(self.pos)) / 20)
+                add_volume((400 - get_distance_from_focus(self.pos)) / 40)
                 self.sound2.set_volume(0.2)
         
         #if self.controll[3] == 2:
@@ -133,7 +133,7 @@ class Spaceship(pygame.sprite.Sprite):
                     geptuke = random.randint(-150, 100)
                     if geptuke > 0:
                         add_reasource(colors[n], geptuke, self.pos, n, [self.x_speed, self.y_speed])
-
+                self.dead = "Changed"
                 killed_chosen_maybe(self)
                 self.kill()
     
@@ -144,8 +144,6 @@ class Spaceship(pygame.sprite.Sprite):
             self.x_speed += math.sin(self.angle / 180.0 * math.pi) * self.info["engine_efficiancy"]
             self.y_speed += math.cos(self.angle / 180.0 * math.pi) * self.info["engine_efficiancy"]
             self.to_draw = self.flames[random.randint(0, 3)]
-            if random.randint(0, 3) == 0 and self.gun_timer < 16:
-                add_volume((400 - get_distance_from_focus(self.pos)) / 80)
         else:
             self.to_draw = self.flameless
 

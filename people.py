@@ -23,7 +23,7 @@ class Bot(pygame.sprite.Sprite):
             self.new_target(my_spaceship, all_spaceships)
         
         if random.randint(0, 60) == 1:
-            self.unaccurate = random.randint(self.professional, self.professional)
+            self.unaccurate = random.randint(-self.professional, self.professional)
         
         inputs = [self.thrust, 0, 0, 0]
 
@@ -52,8 +52,8 @@ class Bot(pygame.sprite.Sprite):
                 x += (my_spaceship.pos[0] - n.pos[0]) * 0.32
                 y += (my_spaceship.pos[1] - n.pos[1]) * 0.32
                 
-                x -= ((force[0] * 140) ** 18)
-                y -= ((force[1] * 140) ** 18)
+                #x -= ((force[0] * 140) ** 18)
+                #y -= ((force[1] * 140) ** 18)
 
                 angle = calculate_angle([0, 0], [x, y]) + 180
                 speed = math.sqrt((x ** 2) + (y ** 2))

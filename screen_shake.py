@@ -57,7 +57,7 @@ def main():
         if player.colliderect(falling):
             # if the player is hit by the rock,
             # we create a new shake-generator
-            offset = shake(13, get_volume(), 7)
+            offset = shake(6, 8, 6)
             falling = get_rock()
 
         if not screen_rect.contains(falling):

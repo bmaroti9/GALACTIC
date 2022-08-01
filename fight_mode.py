@@ -69,7 +69,7 @@ def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
         x = test_shots(n)
         if n.c and x and n.dead == 0 and pygame.sprite.collide_mask(x, n):
             if not x.appointed == n:
-                n.dead = 3
+                n.dead = 1
                 x.kill()
                 set_focus(x.appointed)
                 x.appointed.score += 1
