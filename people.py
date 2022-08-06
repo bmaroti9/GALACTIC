@@ -36,6 +36,7 @@ class Bot(pygame.sprite.Sprite):
             inputs[1] = 1
 
         if random.randint(0, 30) == 1:
+            #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! [removed shooting]
             inputs[3] = 1
         
         return inputs
@@ -44,13 +45,10 @@ class Bot(pygame.sprite.Sprite):
         everybody = self.get_list_of_in_range(my_spaceship, all_spaceships)
 
         g = gravity(my_spaceship, self.sun, self.planets)
-        hehe = distance([my_spaceship.x_speed, my_spaceship.y_speed], g)
-        print(hehe)
+        cx = (my_spaceship.x_speed * (g[0] * 200)) ** 7
+        cy = (my_spaceship.y_speed * (g[1] * 200)) ** 7
 
-        if hehe < 1.4:
-            self.target = (calculate_angle(g, [0, 0]) + self.unaccurate) % 360
-            self.thrust = 1
-        elif len(everybody) > 0:
+        if len(everybody) > 0:
             best = math.inf
             best_angle = 0
             for n in everybody:
@@ -58,9 +56,8 @@ class Bot(pygame.sprite.Sprite):
                 y = (my_spaceship.y_speed - n.y_speed) ** 3
                 x += (my_spaceship.pos[0] - n.pos[0]) * 0.32
                 y += (my_spaceship.pos[1] - n.pos[1]) * 0.32
-                
-                #x -= ((force[0] * 140) ** 18)
-                #y -= ((force[1] * 140) ** 18)
+                #x += cx
+                #y += cy
 
                 angle = calculate_angle([0, 0], [x, y]) + 180
                 speed = math.sqrt((x ** 2) + (y ** 2))
@@ -75,8 +72,11 @@ class Bot(pygame.sprite.Sprite):
                 self.thrust = 1
             else:
                 self.thrust = 0
-        elif random.randint(0, 3) == 1:
-            self.target = random.randint(0, 360)
+        elif random.randint(0, 5) <= 10:
+            #x = random.randint(-100, 100) + cx
+            #y = random.randint(-100, 100) + cy
+            self.target = calculate_angle([0, 0], [-cx, -cy]) + 180
+            print("hihi", cx, cy, self.target, g, [my_spaceship.x_speed, my_spaceship.y_speed])
             self.thrust = 1
 
     def get_list_of_in_range(self, my_spaceship, spaceships):

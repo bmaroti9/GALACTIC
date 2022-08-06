@@ -158,7 +158,7 @@ class Planet(pygame.sprite.Sprite):
         
 
 def gravity(you, sun, planets):
-    dis = distance(you.pos, (sun.pos)) + 0.0001
+    dis = distance(you.pos, sun.pos) + 0.0001
     weight = (sun.size ** 2)
     x = ((sun.pos[0] - you.pos[0]) / (dis ** 2.5)) * weight * 0.0008
     y = ((sun.pos[1] - you.pos[1]) / (dis ** 2.5)) * weight * 0.0008
