@@ -102,6 +102,36 @@ class Bomb(pygame.sprite.Sprite):
 
 BOMBS = pygame.sprite.Group()
 SHOTS = pygame.sprite.Group()
+MARKERS = []
+COLORS = []
+
+def set_marker(pos, color):
+    global MARKERS
+    global COLORS
+    
+    if COLORS.__contains__(color):
+        x = COLORS.index(color)
+        MARKERS[x] = pos
+    else:    
+        MARKERS.append(pos)
+        COLORS.append(color)
+
+def blit_marker(surface):
+    global MARKERS
+    global COLORS
+    
+    #screen_focus = get_screen_focus()
+    index = 0
+
+    for n in MARKERS:
+        #real_x = screen_focus.pos[0] - n[0] + surface.get_width() / 2
+        #real_y = screen_focus.pos[1] - n[1] + surface.get_height() / 2
+        x = min(max(n[0], -(surface.get_width() / 2) + 50), (surface.get_width() / 2) - 50)
+        y = min(max(n[1], -(surface.get_height() / 2) + 50), (surface.get_height() / 2) - 50)
+        
+        pygame.draw.circle(surface, COLORS[index], 
+                [surface.get_width() / 2 + x, surface.get_height() / 2 + y], 4)
+        index += 1
 
 def add_bomb(pos, speed):
     BOMBS.add(Bomb(pos, speed))

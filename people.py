@@ -6,6 +6,7 @@ import random
 
 from helpers import *
 from sun import *
+from weapons import set_marker
 
 class Bot(pygame.sprite.Sprite):
     def __init__(self, name, sun, planets):
@@ -18,13 +19,15 @@ class Bot(pygame.sprite.Sprite):
         self.professional = random.randint(6, 60)
         self.sun = sun
         self.planets = planets
-    
+        self.target_dis = 10
+
     def controll_spacehip(self, my_spaceship, all_spaceships):
-        if random.randint(0, 12) == 1:
+        if every_ticks(self.target_dis):
             self.new_target(my_spaceship, all_spaceships)
         
         if random.randint(0, 60) == 1:
-            self.unaccurate = random.randint(-self.professional, self.professional)
+            #self.unaccurate = random.randint(-self.professional, self.professional)
+            self.unaccurate = 0
         
         inputs = [self.thrust, 0, 0, 0]
 
@@ -47,7 +50,7 @@ class Bot(pygame.sprite.Sprite):
         g = gravity(my_spaceship, self.sun, self.planets)
         cx = (my_spaceship.x_speed * (g[0] * 200)) ** 7
         cy = (my_spaceship.y_speed * (g[1] * 200)) ** 7
-
+        '''
         if len(everybody) > 0:
             best = math.inf
             best_angle = 0
@@ -78,6 +81,36 @@ class Bot(pygame.sprite.Sprite):
             self.target = calculate_angle([0, 0], [-cx, -cy]) + 180
             print("hihi", cx, cy, self.target, g, [my_spaceship.x_speed, my_spaceship.y_speed])
             self.thrust = 1
+        '''
+        planet = self.planets.sprites()[0]
+
+        closest_pos = rotating_position(0, planet.size, 
+                    calculate_angle(my_spaceship.pos, planet.pos), planet.pos) 
+
+        ax = ((my_spaceship.x_speed * 1.8) + (g[0] * 150)) ** 3
+        ay = ((my_spaceship.y_speed * 1.8) + (g[1] * 150)) ** 3
+        
+        bx = (my_spaceship.pos[0] - closest_pos[0]) * 0.32
+        by = (my_spaceship.pos[1] - closest_pos[1]) * 0.32
+        
+        he = 10
+
+        set_marker([ax / he, ay / he], (250, 100, 0))
+        set_marker([bx / he, by / he], (0, 200, 0))
+        set_marker([(ax + bx) / he, (ay + by) / he], (200, 0, 0))
+
+        best_angle = calculate_angle([0, 0], [ax + bx, ay + by]) + 180
+        best = math.sqrt(((ax + bx) ** 2) + ((ay + by) ** 2))
+
+        self.target = (best_angle + self.unaccurate) % 360
+        self.target_dis = min(max(distance(my_spaceship.pos, planet.pos) // 200, 2), 80)
+        
+        print(self.target_dis)
+        
+        if best > self.target_dis * 8:
+            self.thrust = 1
+        else:
+            self.thrust = 0
 
     def get_list_of_in_range(self, my_spaceship, spaceships):
         a = []

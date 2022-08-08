@@ -25,14 +25,15 @@ def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
 
     for n in PLANETS:
         n.update(surface, SCREEN_FOCUS, SPACESHIPS)
-    
-    update_reasources(surface)
 
     for spaceship in SPACESHIPS:
         a = gravity(spaceship, SUN, PLANETS)
         spaceship.x_speed += a[0]
         spaceship.y_speed += a[1]
         spaceship.update(surface)
+
+    update_reasources(surface)
+    blit_marker(surface)
     
     speed = "{:.2f}".format(
         math.sqrt((SCREEN_FOCUS.x_speed ** 2) + (SCREEN_FOCUS.y_speed ** 2)))
