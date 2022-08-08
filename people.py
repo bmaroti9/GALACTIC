@@ -20,6 +20,7 @@ class Bot(pygame.sprite.Sprite):
         self.sun = sun
         self.planets = planets
         self.target_dis = 10
+        self.planet = random.choice(self.planets.sprites()) 
 
     def controll_spacehip(self, my_spaceship, all_spaceships):
         if every_ticks(self.target_dis):
@@ -82,32 +83,30 @@ class Bot(pygame.sprite.Sprite):
             print("hihi", cx, cy, self.target, g, [my_spaceship.x_speed, my_spaceship.y_speed])
             self.thrust = 1
         '''
-        planet = self.planets.sprites()[0]
 
-        closest_pos = rotating_position(0, planet.size, 
-                    calculate_angle(my_spaceship.pos, planet.pos), planet.pos) 
+        closest_pos = rotating_position(0, self.planet.size - 10, 
+                    calculate_angle(my_spaceship.pos, self.planet.pos), self.planet.pos) 
 
-        ax = ((my_spaceship.x_speed * 1.8) + (g[0] * 150)) ** 3
-        ay = ((my_spaceship.y_speed * 1.8) + (g[1] * 150)) ** 3
+        ax = ((my_spaceship.x_speed * 1.7) + (g[0] * 140)) ** 3
+        ay = ((my_spaceship.y_speed * 1.7) + (g[1] * 140)) ** 3
         
-        bx = (my_spaceship.pos[0] - closest_pos[0]) * 0.32
-        by = (my_spaceship.pos[1] - closest_pos[1]) * 0.32
+        bx = (my_spaceship.pos[0] - closest_pos[0]) * 0.33
+        by = (my_spaceship.pos[1] - closest_pos[1]) * 0.33
         
         he = 10
 
-        set_marker([ax / he, ay / he], (250, 100, 0))
-        set_marker([bx / he, by / he], (0, 200, 0))
-        set_marker([(ax + bx) / he, (ay + by) / he], (200, 0, 0))
+        if get_screen_focus().focus == my_spaceship:
+            set_marker([ax / he, ay / he], (250, 200, 0))
+            set_marker([bx / he, by / he], (0, 200, 0))
+            set_marker([(ax + bx) / he, (ay + by) / he], (200, 0, 0))
 
         best_angle = calculate_angle([0, 0], [ax + bx, ay + by]) + 180
         best = math.sqrt(((ax + bx) ** 2) + ((ay + by) ** 2))
 
         self.target = (best_angle + self.unaccurate) % 360
-        self.target_dis = min(max(distance(my_spaceship.pos, planet.pos) // 200, 2), 80)
+        self.target_dis = min(max(distance(my_spaceship.pos, self.planet.pos) // 200, 2), 80)
         
-        print(self.target_dis)
-        
-        if best > self.target_dis * 8:
+        if best > self.target_dis * 8.6:
             self.thrust = 1
         else:
             self.thrust = 0
