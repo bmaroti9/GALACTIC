@@ -7,6 +7,7 @@ import random
 from helpers import *
 from sun import *
 from weapons import set_marker
+from star import *
 
 class Bot(pygame.sprite.Sprite):
     def __init__(self, name, sun, planets):
@@ -26,9 +27,13 @@ class Bot(pygame.sprite.Sprite):
         if every_ticks(self.target_dis):
             self.new_target(my_spaceship, all_spaceships)
         
-        if random.randint(0, 60) == 1:
+        if random.randint(0, 30) == -1:
             #self.unaccurate = random.randint(-self.professional, self.professional)
             self.unaccurate = 0
+            x = get_arrow()
+            hihi = self.planets.sprites().index(x)
+            self.planet = self.planets.sprites()[x]
+
         
         inputs = [self.thrust, 0, 0, 0]
 
@@ -49,8 +54,7 @@ class Bot(pygame.sprite.Sprite):
         everybody = self.get_list_of_in_range(my_spaceship, all_spaceships)
 
         g = gravity(my_spaceship, self.sun, self.planets)
-        cx = (my_spaceship.x_speed * (g[0] * 200)) ** 7
-        cy = (my_spaceship.y_speed * (g[1] * 200)) ** 7
+        g_strength = distance(g, [0, 0])
         '''
         if len(everybody) > 0:
             best = math.inf
@@ -84,15 +88,20 @@ class Bot(pygame.sprite.Sprite):
             self.thrust = 1
         '''
 
-        closest_pos = rotating_position(0, self.planet.size - 10, 
+        closest_pos = rotating_position(0, self.planet.size - 7, 
                     calculate_angle(my_spaceship.pos, self.planet.pos), self.planet.pos) 
 
-        ax = ((my_spaceship.x_speed * 1.7) + (g[0] * 140)) ** 3
-        ay = ((my_spaceship.y_speed * 1.7) + (g[1] * 140)) ** 3
+        ax = ((my_spaceship.x_speed * 1.68) + (g[0] * 145)) ** 3
+        ay = ((my_spaceship.y_speed * 1.68) + (g[1] * 145)) ** 3
         
         bx = (my_spaceship.pos[0] - closest_pos[0]) * 0.33
         by = (my_spaceship.pos[1] - closest_pos[1]) * 0.33
         
+        restrict =  min(((4100 / ((g_strength * 320) ** 2)) / (distance([bx, by], [0, 0]))), 1)
+
+        bx = bx * restrict
+        by = by * restrict
+
         he = 10
 
         if get_screen_focus().focus == my_spaceship:
@@ -104,8 +113,12 @@ class Bot(pygame.sprite.Sprite):
         best = math.sqrt(((ax + bx) ** 2) + ((ay + by) ** 2))
 
         self.target = (best_angle + self.unaccurate) % 360
-        self.target_dis = min(max(distance(my_spaceship.pos, self.planet.pos) // 200, 2), 80)
+        self.target_dis = min(distance(my_spaceship.pos, self.planet.pos) // 200, 50)
+        self.target_dis -= (g_strength * 320) ** 2
+        self.target_dis = max(4, round(self.target_dis))
         
+        #print([self.target_dis, g_strength, restrict, g_strength * 187])
+
         if best > self.target_dis * 8.6:
             self.thrust = 1
         else:

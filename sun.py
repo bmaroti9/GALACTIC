@@ -64,10 +64,14 @@ class Planet(pygame.sprite.Sprite):
         w = True
         while w:
             w = False
-            self.pos = [random.randint(-40000, 40000),
-                        random.randint(-40000, 40000)]
+            #self.pos = [random.randint(-40000, 40000),
+                        #random.randint(-40000, 40000)]
+            self.pos = [random.randint(20000, 30000),
+                        random.randint(20000, 30000)]
+
             for n in h:
-                if distance(n.pos, self.pos) < n.size + self.size + 5000:
+                #if distance(n.pos, self.pos) < n.size + self.size + 5000:
+                if distance(n.pos, self.pos) < n.size + self.size + 1500:
                     w = True
                     print("pos_block")
 
@@ -147,10 +151,12 @@ class Planet(pygame.sprite.Sprite):
                         #n.landed = False
                         pass
 
-                    if (spaceship.dead == 0 and c < 330 and c > 30) or l > 2:
+                    if (spaceship.dead == 0 and c < 310 and c > 50) or l > 2:
+                        print("Failed landing!!!")
                         spaceship.dead = 1
 
                 else:
+                    print("Crashed into planet!!!")
                     spaceship.dead = 1
                     #n.landed = self
                     spaceship.x_speed = 0
