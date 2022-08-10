@@ -143,7 +143,7 @@ def game(surface, CLOCK, sound1, load):
     for _ in range(10):
         name = random_name()
         add_to_my_spaceships(Spaceship(3, name, 
-            [random.randint(-4500, -4500), random.randint(-4500, -4500)]))
+            [random.randint(30200, 30200), random.randint(30200, 30200)]))
         add_bot(name, SUN, PLANETS)
 
     set_focus(get_my_spacehip())

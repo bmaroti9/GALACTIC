@@ -18,13 +18,17 @@ class Bot(pygame.sprite.Sprite):
         self.unaccurate = 0
         self.name = name
         self.professional = random.randint(6, 60)
+        
         self.sun = sun
         self.planets = planets
+        self.closest_object = sun
+
         self.target_dis = 10
-        self.planet = random.choice(self.planets.sprites()) 
+        self.planet = sun
 
     def controll_spacehip(self, my_spaceship, all_spaceships):
         if every_ticks(self.target_dis):
+            self.recalculate_closest_object(my_spaceship)
             self.new_target(my_spaceship, all_spaceships)
         
         if random.randint(0, 30) == -1:
@@ -88,11 +92,11 @@ class Bot(pygame.sprite.Sprite):
             self.thrust = 1
         '''
 
-        closest_pos = rotating_position(0, self.planet.size - 7, 
-                    calculate_angle(my_spaceship.pos, self.planet.pos), self.planet.pos) 
+        closest_pos = rotating_position(0, self.closest_object.size - 7, 
+                calculate_angle(my_spaceship.pos, self.closest_object.pos), self.closest_object.pos) 
 
-        ax = ((my_spaceship.x_speed * 1.68) + (g[0] * 145)) ** 3
-        ay = ((my_spaceship.y_speed * 1.68) + (g[1] * 145)) ** 3
+        ax = ((my_spaceship.x_speed * 1.63) + (g[0] * 180)) ** 3
+        ay = ((my_spaceship.y_speed * 1.63) + (g[1] * 180)) ** 3
         
         bx = (my_spaceship.pos[0] - closest_pos[0]) * 0.33
         by = (my_spaceship.pos[1] - closest_pos[1]) * 0.33
@@ -113,9 +117,9 @@ class Bot(pygame.sprite.Sprite):
         best = math.sqrt(((ax + bx) ** 2) + ((ay + by) ** 2))
 
         self.target = (best_angle + self.unaccurate) % 360
-        self.target_dis = min(distance(my_spaceship.pos, self.planet.pos) // 200, 50)
+        self.target_dis = min(distance(my_spaceship.pos, self.planet.pos) // 200, 15)
         self.target_dis -= (g_strength * 320) ** 2
-        self.target_dis = max(4, round(self.target_dis))
+        self.target_dis = max(2, round(self.target_dis))
         
         #print([self.target_dis, g_strength, restrict, g_strength * 187])
 
@@ -123,6 +127,38 @@ class Bot(pygame.sprite.Sprite):
             self.thrust = 1
         else:
             self.thrust = 0
+
+    def close_random_object(self, my_spaceship):
+        x = random.randint(0, len(self.planets))
+
+        if x == len(self.planets):
+            hihi = self.sun
+        else:
+            hihi = self.planets.sprites()[x]
+        
+        dis = distance(my_spaceship.pos, hihi.pos) - hihi.size
+
+        return [dis, hihi]
+
+    def recalculate_closest_object(self, my_spaceship):
+        original = distance(my_spaceship.pos, self.closest_object.pos)
+
+        x = self.close_random_object(my_spaceship)
+        new = x[0]
+
+        if new < original:
+            self.closest_object = x[1]
+        
+
+    def planet_security(self):
+        x = random.randint(0, len(self.planets))
+        y = random.randint(0, 2)
+        
+        if x == len(self.planets):
+            hihi = self.sun
+        else:
+            hihi = self.planets[x]
+
 
     def get_list_of_in_range(self, my_spaceship, spaceships):
         a = []
