@@ -130,7 +130,7 @@ def game(surface, CLOCK, sound1, load):
     
     SUN = Sun()
     PLANETS = pygame.sprite.Group()
-    for _ in range(8):
+    for _ in range(40):
         PLANETS.add(Planet(SUN, PLANETS, surface))
 
     SCORE = 0
@@ -143,7 +143,7 @@ def game(surface, CLOCK, sound1, load):
     for _ in range(10):
         name = random_name()
         add_to_my_spaceships(Spaceship(3, name, 
-            [random.randint(30200, 30200), random.randint(30200, 30200)]))
+            [random.randint(28000, 28000), random.randint(30200, 30200)]))
         add_bot(name, SUN, PLANETS)
 
     set_focus(get_my_spacehip())

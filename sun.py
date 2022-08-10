@@ -66,8 +66,8 @@ class Planet(pygame.sprite.Sprite):
             w = False
             #self.pos = [random.randint(-40000, 40000),
                         #random.randint(-40000, 40000)]
-            self.pos = [random.randint(20000, 30000),
-                        random.randint(20000, 30000)]
+            self.pos = [random.randint(10000, 30000),
+                        random.randint(10000, 30000)]
 
             for n in h:
                 #if distance(n.pos, self.pos) < n.size + self.size + 5000:
