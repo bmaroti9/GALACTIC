@@ -124,15 +124,15 @@ def blit_marker(surface):
     index = 0
 
     for n in MARKERS:
-        x = screen_focus.pos[0] - n[0] + surface.get_width() / 2
-        y = screen_focus.pos[1] - n[1] + surface.get_height() / 2
-        #x = min(max(n[0], -(surface.get_width() / 2) + 50), 
-         #       (surface.get_width() / 2) - 50) + surface.get_width() / 2
-        #y = min(max(n[1], -(surface.get_height() / 2) + 50), 
-         #       (surface.get_height() / 2) - 50) + surface.get_height() / 2
+        #x = screen_focus.pos[0] - n[0] + surface.get_width() / 2
+        #y = screen_focus.pos[1] - n[1] + surface.get_height() / 2
+        x = min(max(n[0], -(surface.get_width() / 2) + 50), 
+               (surface.get_width() / 2) - 50) + surface.get_width() / 2
+        y = min(max(n[1], -(surface.get_height() / 2) + 50), 
+               (surface.get_height() / 2) - 50) + surface.get_height() / 2
         
         pygame.draw.circle(surface, COLORS[index], 
-                [x, y], 8)
+                [x, y], 5)
         index += 1
 
 def add_bomb(pos, speed):
