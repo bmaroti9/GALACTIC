@@ -26,12 +26,12 @@ class Ship():
         self.normal_image = pygame.image.load(
             "images/Lemming.png").convert_alpha()
         self.normal_image = pygame.transform.rotozoom(
-            self.normal_image, -90, 0.25)
+            self.normal_image, -90, 0.08)
 
         self.thrust_image = pygame.image.load(
             "images/Lemming1.png").convert_alpha()
         self.thrust_image = pygame.transform.rotozoom(
-            self.thrust_image, -90, 0.25)
+            self.thrust_image, -90, 0.08)
 
         self.world_pos_x = world_pos_x
         self.world_pos_y = world_pos_y
@@ -45,7 +45,7 @@ class Ship():
             accel_x = math.cos(self.angle / 180 * math.pi)
             accel_y = math.sin(self.angle / 180 * math.pi)
 
-            power = 0.2
+            power = 0.5
             self.speed_x += accel_x * power
             self.speed_y -= accel_y * power
 
@@ -53,7 +53,7 @@ class Ship():
             max_speed = 20
             speed = math.sqrt(self.speed_x ** 2 + self.speed_y ** 2)
             if speed > max_speed:
-                self.speed_x = self.speed_x / speed * max_speed
+                self.speed_x *= max_speed / speed
                 self.speed_y = self.speed_y / speed * max_speed
 
         self.world_pos_x += self.speed_x
@@ -94,7 +94,7 @@ class World:
         self.world_view_x = - self.screen_width / 2
         self.world_view_y = - self.screen_height / 2
 
-        self.create_planets(10)
+        self.create_planets(20)
         self.ship = Ship(0, 0)
 
     def create_planets(self, count: int):
@@ -135,17 +135,17 @@ class World:
             self.ship.thrusting = False
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT]:
-                self.ship.angle = math.fmod(self.ship.angle + 5, 360)
+                self.ship.angle = math.fmod(self.ship.angle + 10, 360)
             if keys[pygame.K_RIGHT]:
-                self.ship.angle = math.fmod(self.ship.angle - 5, 360)
+                self.ship.angle = math.fmod(self.ship.angle - 10, 360)
             if keys[pygame.K_UP]:
                 self.ship.thrusting = True
 
             # see more in the direction we are going
             self.world_view_x = self.ship.world_pos_x - self.screen_width / 2 + \
-                20 * self.ship.speed_x
+                15 * self.ship.speed_x
             self.world_view_y = self.ship.world_pos_y - self.screen_height / 2 + \
-                20 * self.ship.speed_y
+                15 * self.ship.speed_y
 
 
 if __name__ == '__main__':

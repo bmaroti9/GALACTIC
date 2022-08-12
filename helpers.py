@@ -45,7 +45,8 @@ class Screen_focus(pygame.sprite.Sprite):
     
     def update(self, spaceships):
         self.score = self.focus.score
-        self.pos = self.focus.pos
+        self.pos = [self.focus.pos[0] + self.focus.x_speed * 15, 
+                self.focus.pos[1] + self.focus.y_speed * 15]
         self.x_speed = self.focus.x_speed
         self.y_speed = self.focus.y_speed
         if self.focus.dead == "Changed":

@@ -45,12 +45,15 @@ class Arrow(pygame.sprite.Sprite):
 
     def update(self, surface, SCREEN_FOCUS, SCORE_FONT):
         if isinstance(self.chosen, pygame.sprite.Sprite):
-            dis = distance((SCREEN_FOCUS.pos[0], SCREEN_FOCUS.pos[1]), self.chosen.pos)
+            dis = distance((SCREEN_FOCUS.focus.pos[0], SCREEN_FOCUS.focus.pos[1]), self.chosen.pos)
             if dis > 440:
                 angle = calculate_angle(
-                    [SCREEN_FOCUS.pos[0], SCREEN_FOCUS.pos[1]], self.chosen.pos)
+                    [SCREEN_FOCUS.focus.pos[0], SCREEN_FOCUS.focus.pos[1]], self.chosen.pos)
+                off_center = [SCREEN_FOCUS.pos[0] - SCREEN_FOCUS.focus.pos[0], 
+                                    SCREEN_FOCUS.pos[1] - SCREEN_FOCUS.focus.pos[1]]
                 pos = rotating_position(
-                    0, 150, angle, [surface.get_width() / 2, surface.get_height() / 2])
+                    0, 150, angle, [surface.get_width() / 2 + off_center[0], 
+                                surface.get_height() / 2 + off_center[1]])
                 self.copy = pygame.transform.rotozoom(
                     self.red, angle + 90, 0.15)
                 self.rect = self.copy.get_rect()
@@ -71,8 +74,10 @@ class Arrow(pygame.sprite.Sprite):
                 surface.blit(hihi, rect)
 
     def backwards(self, direction, surface):
-        pos = rotating_position(
-            0, 150, direction, [surface.get_width() / 2, surface.get_height() / 2])
+        off_center = [SCREEN_FOCUS.pos[0] - SCREEN_FOCUS.focus.pos[0], 
+                                    SCREEN_FOCUS.pos[1] - SCREEN_FOCUS.focus.pos[1]]
+        pos = rotating_position(0, 150, direction, [surface.get_width() / 2 + off_center[0], 
+                    surface.get_height() / 2 + off_center[1]])
         self.copy = pygame.transform.rotozoom(self.green, direction + 90, 0.15)
         self.rect = self.copy.get_rect()
         self.rect.center = (pos)
