@@ -12,6 +12,7 @@ from opponent import *
 from player import *
 from star import *
 from sun import *
+from reasources import *
 
 def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
     SPACESHIPS = get_spaceships()
@@ -25,6 +26,8 @@ def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
 
     for n in PLANETS:
         n.update(surface, SCREEN_FOCUS, SPACESHIPS)
+    
+    draw_thrust(surface)
 
     for spaceship in SPACESHIPS:
         a = gravity(spaceship, SUN, PLANETS)

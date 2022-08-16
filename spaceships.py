@@ -141,9 +141,12 @@ class Spaceship(pygame.sprite.Sprite):
             #increase = ((self.info["max_speed"] - (distance([0, 0], [self.x_speed, 
                     #self.y_speed]))) / (rev_percent(self.info["acceleration"], 20) * 10))
 
-            self.x_speed += math.sin(self.angle / 180.0 * math.pi) * self.info["engine_efficiancy"]
-            self.y_speed += math.cos(self.angle / 180.0 * math.pi) * self.info["engine_efficiancy"]
-            self.to_draw = self.flames[random.randint(0, 3)]
+            accel_x = math.sin(self.angle / 180.0 * math.pi) * self.info["engine_efficiancy"] * 4
+            accel_y = math.cos(self.angle / 180.0 * math.pi) * self.info["engine_efficiancy"] * 4
+            
+            self.smart_thrust(accel_x, accel_y)
+            #self.to_draw = self.flames[random.randint(0, 3)]
+            add_point(self.pos)
         else:
             self.to_draw = self.flameless
 
@@ -153,6 +156,15 @@ class Spaceship(pygame.sprite.Sprite):
 
         if self.c:
             surface.blit(self.image, self.rect)
+
+    def smart_thrust(self, accel_x, accel_y):
+        self.x_speed += accel_x
+        self.y_speed += accel_y
+        
+        speed = distance([0, 0], [self.x_speed, self.y_speed])
+        if speed > 15:
+            self.x_speed *= 15 / speed
+            self.y_speed *= 15 / speed
     
     def feed_input(self, inputs):
         self.controll = inputs

@@ -140,7 +140,7 @@ def game(surface, CLOCK, sound1, load):
         STARS.append(Star(surface.get_width(), surface.get_height()))
 
     add_to_my_spaceships(Spaceship(random.randint(0, 0), personal_name(), [30000, 32000]))
-    for _ in range(10):
+    for _ in range(0):
         name = random_name()
         add_to_my_spaceships(Spaceship(0, name, 
             [random.randint(28000, 28000), random.randint(30200, 30200)]))

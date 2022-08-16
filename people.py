@@ -24,9 +24,12 @@ class Bot(pygame.sprite.Sprite):
         self.closest_object = sun
 
         self.update_timing = 10
-        self.target = sun
+        self.target = 0
 
     def controll_spacehip(self, my_spaceship, all_spaceships):
+        if self.target == 0:
+            self.target = random.choice(all_spaceships)
+
         self.recalculate_closest_object(my_spaceship)
         
         if every_ticks(self.update_timing):

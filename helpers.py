@@ -95,6 +95,12 @@ def calculate_angle(pos1, pos2):
     y = pos1[1] - pos2[1]
     return 0 - (math.atan2(y, x) / math.pi * 180) - 90
 
+def get_screen_pos(world_pos, surface):
+    screen_focus = get_screen_focus()
+    x = screen_focus.pos[0] - world_pos[0] + surface.get_width() / 2
+    y = screen_focus.pos[1] - world_pos[1] + surface.get_height() / 2
+    return [x, y]
+
 
 def distance(a, b):
     return math.sqrt((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2)
