@@ -59,29 +59,3 @@ def check_reasources(pos, FR):
                 return n
     
     return 0
-
-POINTS = []
-
-def add_point(pos):
-    global POINTS
-    POINTS.append(pos)
-
-def thrust_animation(surface):
-    global POINTS
-    for n in range(len(POINTS) - 1):
-        a = get_screen_pos(POINTS[n], surface)
-        b = get_screen_pos(POINTS[n + 1], surface)        
-        pygame.draw.line(surface, (50, 50, 200), a, b, 15 - n)
-
-def manage_points():
-    global POINTS
-
-    if len(POINTS) > 6:
-        del POINTS[0]
-
-def draw_thrust(surface):
-    global POINTS
-    manage_points()
-    print("hihi ", POINTS)
-    thrust_animation(surface)
-    print("haha", POINTS)
