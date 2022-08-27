@@ -8,7 +8,7 @@
         26
       ]
     ],
-    "gun_timer": 6,
+    "gun_timer": 10,
     "engine_efficiancy": 0.06,
     "type": "fighter",
     "turning": 1
@@ -75,5 +75,23 @@
     "engine_efficiancy": 0.12,
     "type": "command",
     "turning": 0.4
+  },
+  {
+    "name": "Gun_Green",
+    "shrink": 0.1,
+    "guns": [[0, 10]],
+    "gun_timer": 9,
+    "engine_efficiancy": 0,
+    "type": "gun",
+    "turning": 1
+  }, 
+  {
+    "name": "Tree_ship",
+    "shrink": 0.15,
+    "guns": [],
+    "gun_timer": 9,
+    "engine_efficiancy": 0.1,
+    "type": "trade",
+    "turning": 0.6
   }
 ]

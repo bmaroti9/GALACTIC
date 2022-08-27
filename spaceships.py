@@ -54,10 +54,13 @@ class Spaceship(pygame.sprite.Sprite):
 
         self.flames = []
         for n in [1, 2, 3, 4]:
-            image = pygame.image.load(
-                "images/" + str(self.info["name"]) + str(n) + ".png")
-            image = pygame.transform.rotozoom(
-                image, 0.0, self.info["shrink"]).convert_alpha()
+            try:
+                image = pygame.image.load(
+                    "images/" + str(self.info["name"]) + str(n) + ".png")
+                image = pygame.transform.rotozoom(
+                    image, 0.0, self.info["shrink"]).convert_alpha()
+            except:
+                image = self.flameless
             self.flames.append(image)
 
         for n in range(9):
@@ -87,7 +90,7 @@ class Spaceship(pygame.sprite.Sprite):
 
             for n in self.info["guns"]:
                 hihi = rotating_position(n[0], n[1], self.angle - 180, self.pos)
-                add_shot(hihi, "purple", -self.angle, self, [self.x_speed, self.y_speed])
+                add_shot(hihi, "orange", -self.angle, self, [self.x_speed, self.y_speed])
                 self.gun_timer = self.info['gun_timer']
             
             if len(self.info["guns"]) > 0:
@@ -98,8 +101,9 @@ class Spaceship(pygame.sprite.Sprite):
             elif self.controll[0]:
                 shooot = False
         
-        if every_ticks(5) and shooot == True and self.controll[0]:
-            add_volume(7)
+        engine = self.info["engine_efficiancy"] > 0
+        if every_ticks(5) and shooot == True and self.controll[0] and engine:
+            add_volume((300 - get_distance_from_focus(self.pos)) // 50)
         
         #if self.controll[3] == 2:
             #print("almost")

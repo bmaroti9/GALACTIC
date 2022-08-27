@@ -147,6 +147,7 @@ class Planet(pygame.sprite.Sprite):
                         spaceship.x_speed = 0
                         spaceship.y_speed = 0
                         #n.landed = self
+                        spaceship.angle = (spaceship.angle + ((c - 180) % 360 - 180) * 0.3)  % 360
                     else:
                         #n.landed = False
                         pass

@@ -53,7 +53,6 @@ class Bot(pygame.sprite.Sprite):
             inputs[1] = 1
 
         if random.randint(0, 30) == 1:
-            #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! [removed shooting]
             inputs[3] = 1
         
         return inputs
@@ -63,7 +62,7 @@ class Bot(pygame.sprite.Sprite):
 
         g = gravity(my_spaceship, self.sun, self.planets)
         g_strength = distance(g, [0, 0])
-        '''
+        
         if len(everybody) > 0:
             best = math.inf
             best_angle = 0
@@ -72,9 +71,8 @@ class Bot(pygame.sprite.Sprite):
                 y = (my_spaceship.y_speed - n.y_speed) ** 3
                 x += (my_spaceship.pos[0] - n.pos[0]) * 0.32
                 y += (my_spaceship.pos[1] - n.pos[1]) * 0.32
-                #x += cx
-                #y += cy
-
+        
+        
                 angle = calculate_angle([0, 0], [x, y]) + 180
                 speed = math.sqrt((x ** 2) + (y ** 2))
 
@@ -88,14 +86,7 @@ class Bot(pygame.sprite.Sprite):
                 self.thrust = 1
             else:
                 self.thrust = 0
-        elif random.randint(0, 5) <= 10:
-            #x = random.randint(-100, 100) + cx
-            #y = random.randint(-100, 100) + cy
-            self.point_dir = calculate_angle([0, 0], [-cx, -cy]) + 180
-            print("hihi", cx, cy, self.point_dir, g, [my_spaceship.x_speed, my_spaceship.y_speed])
-            self.thrust = 1
         '''
-        
         closest_pos = rotating_position(0, self.closest_object.size + 900, 
             calculate_angle(my_spaceship.pos, self.closest_object.pos) + 50, self.closest_object.pos) 
         
@@ -130,6 +121,8 @@ class Bot(pygame.sprite.Sprite):
             self.thrust = 1
         else:
             self.thrust = 0
+        '''
+
 
     def close_random_object(self, my_spaceship):
         x = random.randint(0, len(self.planets))

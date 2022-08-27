@@ -24,15 +24,15 @@ def fight_mode(surface, STARS, THRUST, SUN, fonts, PLANETS, PERSON):
     
     SUN.update(surface, SCREEN_FOCUS, SPACESHIPS)
 
-    for n in PLANETS:
-        n.update(surface, SCREEN_FOCUS, SPACESHIPS)
-    
-    draw_thrust(surface)
-
     for spaceship in SPACESHIPS:
         a = gravity(spaceship, SUN, PLANETS)
         spaceship.x_speed += a[0]
         spaceship.y_speed += a[1]
+    
+    for n in PLANETS:
+        n.update(surface, SCREEN_FOCUS, SPACESHIPS)
+    
+    for spaceship in SPACESHIPS:
         spaceship.update(surface)
 
     update_reasources(surface)
