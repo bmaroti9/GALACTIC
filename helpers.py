@@ -319,6 +319,9 @@ def every_ticks(gap):
         return True
     return False
 
+def predictable_random(gap):
+    return pygame.time.get_ticks() % gap
+
 BUTTON_NAMES = []
 BUTTON_STATE = []
 
