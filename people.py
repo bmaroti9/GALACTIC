@@ -25,7 +25,7 @@ class Bot(pygame.sprite.Sprite):
         self.avoid_object = None
         self.avoid_this = None
 
-        self.update_timing = 5
+        self.update_timing = 1
         self.target = 0
 
     def controll_spacehip(self, my_spaceship, all_spaceships):
@@ -109,7 +109,7 @@ class Bot(pygame.sprite.Sprite):
 
     def dangerous(self, my_spaceship, random_object):
         print(random_object)
-        dis = distance(my_spaceship.pos, random_object.pos)
+        dis = distance(my_spaceship.pos, random_object.pos) + random_object.size * 0.5
         ang = calculate_angle([0, 0], [my_spaceship.x_speed, my_spaceship.y_speed])
         aproach_pos = rotating_position(0, dis, ang, my_spaceship.pos)
         aproach_dis = distance(random_object.pos, aproach_pos)
@@ -122,7 +122,7 @@ class Bot(pygame.sprite.Sprite):
             c = (200, 0, 0)
         set_marker(rotating_position(0, -50, should, my_spaceship.pos), c)
         
-        if aproach_dis < random_object.size * 4 and (dis - random_object.size) < spaceship_speed * 900:
+        if aproach_dis < random_object.size * 1.5 and (dis - random_object.size) < spaceship_speed * 900:
             return should
         return None
     
