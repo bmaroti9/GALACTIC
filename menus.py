@@ -139,11 +139,11 @@ def game(surface, CLOCK, sound1, load):
     for _ in range(x):
         STARS.append(Star(surface.get_width(), surface.get_height()))
 
-    add_to_my_spaceships(Spaceship(3, personal_name(), [10000, 7000]))
-    for _ in range(1):
+    add_to_my_spaceships(Spaceship(0, personal_name(), [0, 7000]))
+    for _ in range(40):
         name = random_name()
-        add_to_my_spaceships(Spaceship(random.randint(3, 3), name, 
-            [random.randint(15000, 15000), random.randint(10000, 10000)]))
+        add_to_my_spaceships(Spaceship(random.randint(0, 5), name, 
+            [random.randint(-12000, 12000), random.randint(-8000, 8000)]))
         add_bot(name, SUN, PLANETS)
 
     set_focus(get_my_spacehip())

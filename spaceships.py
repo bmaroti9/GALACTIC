@@ -84,7 +84,7 @@ class Spaceship(pygame.sprite.Sprite):
 
         shooot = True
 
-        if self.controll[3] and self.gun_timer == 0:
+        if self.controll[3] and self.gun_timer == 0 and self.dead == 0:
             speeds = (screen_focus.x_speed - self.x_speed,
                       screen_focus.y_speed - self.y_speed)
 

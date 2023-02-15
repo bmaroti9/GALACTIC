@@ -132,7 +132,7 @@ class Player(pygame.sprite.Sprite):
         self.pos[0] += self.x_speed
         self.pos[1] += self.y_speed
 
-        g = gravity(self, sun, planets)
+        g = gravity(self.pos, sun, planets)
         self.x_speed += g[0]
         self.y_speed += g[1]
 
@@ -170,7 +170,7 @@ class Player(pygame.sprite.Sprite):
         self.stuff(surface)
 
     def on_planet(self, surface, sun, planets, PERSON):
-        g = gravity(self, sun, planets)
+        g = gravity(self.pos, sun, planets)
         self.real_x = PERSON.pos[0] - self.pos[0] + surface.get_width() / 2
         self.real_y = PERSON.pos[1] - self.pos[1] + surface.get_height() / 2
 

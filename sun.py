@@ -164,17 +164,17 @@ class Planet(pygame.sprite.Sprite):
                     spaceship.y_speed = 0
         
 
-def gravity(you, sun, planets):
-    dis = distance(you.pos, sun.pos) + 0.0001
+def gravity(pos, sun, planets):
+    dis = distance(pos, sun.pos) + 0.0001
     weight = (sun.size ** 2)
-    x = ((sun.pos[0] - you.pos[0]) / (dis ** 2.5)) * weight * 0.0008
-    y = ((sun.pos[1] - you.pos[1]) / (dis ** 2.5)) * weight * 0.0008
+    x = ((sun.pos[0] - pos[0]) / (dis ** 2.5)) * weight * 0.0008
+    y = ((sun.pos[1] - pos[1]) / (dis ** 2.5)) * weight * 0.0008
 
     for n in planets:
-        dis = distance(you.pos, (n.pos)) + 0.0001
+        dis = distance(pos, (n.pos)) + 0.0001
         weight = (n.size ** 2)
-        x += ((n.pos[0] - you.pos[0]) / (dis ** 2.5)) * weight * 0.0008
-        y += ((n.pos[1] - you.pos[1]) / (dis ** 2.5)) * weight * 0.0008
+        x += ((n.pos[0] - pos[0]) / (dis ** 2.5)) * weight * 0.0008
+        y += ((n.pos[1] - pos[1]) / (dis ** 2.5)) * weight * 0.0008
 
     return [x, y]
 
